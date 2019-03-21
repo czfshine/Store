@@ -23,6 +23,4 @@ public class InstProduct {
         this.productname = productname;
     }
 
-    public InstProduct() {
-    }
 }
