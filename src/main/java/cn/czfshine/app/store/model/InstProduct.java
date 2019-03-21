@@ -19,6 +19,7 @@ public class InstProduct {
     int id;
     private String productname;
 
+    private InstProduct(){}
     public InstProduct(String productname) {
         this.productname = productname;
     }
