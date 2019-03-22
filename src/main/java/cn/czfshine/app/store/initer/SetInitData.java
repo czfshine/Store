@@ -1,13 +1,7 @@
 package cn.czfshine.app.store.initer;
 
-import cn.czfshine.app.store.model.InstProduct;
-import cn.czfshine.app.store.model.Product;
-import cn.czfshine.app.store.model.Storage;
-import cn.czfshine.app.store.model.Type;
-import cn.czfshine.app.store.repository.InstProductRepository;
-import cn.czfshine.app.store.repository.ProductRepository;
-import cn.czfshine.app.store.repository.StorageRepository;
-import cn.czfshine.app.store.repository.TypeRepository;
+import cn.czfshine.app.store.model.*;
+import cn.czfshine.app.store.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +25,8 @@ class SetInitData {
     CommandLineRunner initDatabase(InstProductRepository instProductRepository,
                                    ProductRepository productRepository,
                                    TypeRepository typeRepository,
-                                   StorageRepository storageRepository
+                                   StorageRepository storageRepository,
+                                   StoreRepository storeRepository
     ) {
 
         return args -> {
@@ -78,8 +73,13 @@ class SetInitData {
                  ) {
                 storageRepository.save(new Storage(p, new Random().nextInt(100)));
             }
-            
 
+            //增加商店
+
+            //取库存
+            List<Storage> all1 = storageRepository.findAll();
+            Store store = new Store("华山超市", "华南农业大学华山区学生宿舍", all1);
+            storeRepository.save(store);
         };
     }
 }
