@@ -3,10 +3,7 @@ package cn.czfshine.app.store.model;
 import com.sun.javafx.beans.IDProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 /**
  * 商品类别
@@ -22,6 +19,16 @@ public class Type {
 
     private String name;
 
-    @ManyToMany
+    @ManyToOne
     private Type parentType;
+
+    public Type(String name, Type parentType) {
+        this.name = name;
+        this.parentType = parentType;
+    }
+
+    public Type(String name) {
+        this.name = name;
+    }
+    private Type(){};
 }
