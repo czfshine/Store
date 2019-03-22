@@ -2,14 +2,19 @@ package cn.czfshine.app.store.initer;
 
 import cn.czfshine.app.store.model.InstProduct;
 import cn.czfshine.app.store.model.Product;
+import cn.czfshine.app.store.model.Storage;
 import cn.czfshine.app.store.model.Type;
 import cn.czfshine.app.store.repository.InstProductRepository;
 import cn.czfshine.app.store.repository.ProductRepository;
+import cn.czfshine.app.store.repository.StorageRepository;
 import cn.czfshine.app.store.repository.TypeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * 初始化一些数据，供调试
@@ -25,7 +30,8 @@ class SetInitData {
     @Bean
     CommandLineRunner initDatabase(InstProductRepository instProductRepository,
                                    ProductRepository productRepository,
-                                   TypeRepository typeRepository
+                                   TypeRepository typeRepository,
+                                   StorageRepository storageRepository
     ) {
 
         return args -> {
@@ -64,6 +70,15 @@ class SetInitData {
                 }
             }
 
+            //增加库存数据
+            List<Product> all = productRepository.findAll();
+            List<Product> products = all.subList(1, 10);
+
+            for (Product p:products
+                 ) {
+                storageRepository.save(new Storage(p, new Random().nextInt(100)));
+            }
+            
 
         };
     }
