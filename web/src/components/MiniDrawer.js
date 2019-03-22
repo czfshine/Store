@@ -120,7 +120,7 @@ class MiniDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Mini variant drawer
+              我的进销存系统
             </Typography>
           </Toolbar>
         </AppBar>

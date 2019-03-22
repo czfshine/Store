@@ -26,8 +26,8 @@ class EmployeeList extends React.Component{
 			<table>
 				<tbody>
 					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
+						<th>商品名</th>
+						<th>规格</th>
 						<th>Description</th>
 					</tr>
 					{employees}
@@ -45,7 +45,7 @@ class B extends Component {
 
 	componentDidMount() {
     //TODO
-		client({method: 'GET', path: 'http://localhost:8080/data/products'}).done(response => {
+		client({method: 'GET', path: '/data/products'}).done(response => {
 			this.setState({employees: response.entity._embedded.products});
 		});
 	}
