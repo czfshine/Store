@@ -30,10 +30,14 @@ public class Store {
     @OneToMany
     private List<Storage> storages;//库存列表
 
-    public Store(String storename, String local, List<Storage> storages) {
+    @OneToMany
+    private List<Sale> sales;//价格列表
+
+    public Store(String storename, String local, List<Storage> storages, List<Sale> sales) {
         this.storename = storename;
         this.local = local;
         this.storages = storages;
+        this.sales = sales;
     }
 
     public Store(String storename, String local) {

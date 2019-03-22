@@ -16,7 +16,7 @@ public class Storage {
     @Id
     @GeneratedValue
     private  int id;
-    @OneToOne
+    @ManyToOne
     private Product product; //库存的商品
     private int count;       //库存的数量
 

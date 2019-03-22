@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Random;
 
@@ -26,7 +27,8 @@ class SetInitData {
                                    ProductRepository productRepository,
                                    TypeRepository typeRepository,
                                    StorageRepository storageRepository,
-                                   StoreRepository storeRepository
+                                   StoreRepository storeRepository,
+                                   SaleRepository saleRepository
     ) {
 
         return args -> {
@@ -74,11 +76,25 @@ class SetInitData {
                 storageRepository.save(new Storage(p, new Random().nextInt(100)));
             }
 
-            //增加商店
-
+            /****增加一个商店***/
             //取库存
             List<Storage> all1 = storageRepository.findAll();
-            Store store = new Store("华山超市", "华南农业大学华山区学生宿舍", all1);
+
+            //增加商品价格
+            for (Storage s: all1
+                 ) {
+                Product product = s.getProduct();
+                //todo:随机
+                saleRepository.save(new Sale(new BigDecimal("1.00"), product));
+            }
+
+            //取商品价格
+            List<Sale> all2 = saleRepository.findAll();
+
+            //增加商店对象
+            Store store = new Store("华山超市", "华南农业大学华山区学生宿舍",
+                    all1, //库存
+                    all2);//价格
             storeRepository.save(store);
         };
     }
