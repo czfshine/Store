@@ -31,3 +31,11 @@ HELP.md
 mvnw
 mvnw.cmd
 *.log
+src/main/resources/static/
+src/main/resources/templates/index.html
+src/main/resources/service-worker.js
+src/main/resources/precache-manifest.a7e24c269e113ee5298cbaa77617deab.js
+src/main/resources/manifest.json
+src/main/resources/index.html
+src/main/resources/favicon.ico
+src/main/resources/asset-manifest.json

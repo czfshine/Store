@@ -113,8 +113,8 @@
       "node"
     ],
     "watchPlugins": [
-      "D:\\workplace\\store\\web\\node_modules\\jest-watch-typeahead\\filename.js",
-      "D:\\workplace\\store\\web\\node_modules\\jest-watch-typeahead\\testname.js"
+      "<rootDir>\\node_modules\\jest-watch-typeahead\\filename.js",
+      "<rootDir>\\node_modules\\jest-watch-typeahead\\testname.js"
     ]
   },
   "babel": {
