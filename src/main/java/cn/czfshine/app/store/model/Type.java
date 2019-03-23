@@ -20,7 +20,7 @@ public class Type {
     private String name;
 
     @ManyToOne
-    private Type parentType;
+    private Type parentType;//一个type只有一个parentType,一个parentType下有多个type,因此是ManyToOne
 
     public Type(String name, Type parentType) {
         this.name = name;

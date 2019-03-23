@@ -16,8 +16,7 @@ import javax.persistence.ManyToOne;
 @Data
 @Entity
 public class InstProduct {
-    private @Id @GeneratedValue
-    int id;
+    private @Id @GeneratedValue int id;
     private String productname;
 
     @ManyToOne //一个商品对应一种类型，一种类型对应多个商品
