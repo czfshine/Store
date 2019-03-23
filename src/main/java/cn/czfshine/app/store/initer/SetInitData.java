@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -22,13 +23,20 @@ import java.util.Random;
 @Slf4j
 class SetInitData {
 
+    //从CustomerRepository开始的5个参数是新增的
     @Bean
     CommandLineRunner initDatabase(InstProductRepository instProductRepository,
                                    ProductRepository productRepository,
                                    TypeRepository typeRepository,
                                    StorageRepository storageRepository,
                                    StoreRepository storeRepository,
-                                   SaleRepository saleRepository
+                                   SaleRepository saleRepository,
+                                   CustomerRepository customerRepository,
+                                   OrderItemRepository orderItemRepository,
+                                   OrdersRepository ordersRepository,
+                                   SoldRepository soldRepository,
+                                   VendorRepository vendorRepository
+
     ) {
 
         return args -> {
@@ -66,6 +74,11 @@ class SetInitData {
                     productRepository.save(new Product(spnames[j], sizemg[i], supian));
                 }
             }
+            //为后面sold信息的添加专门做两个product
+            Product soldProduct1 = new Product("零度可乐","1.5L",coco);
+            Product soldProduct2 = new Product("可比克薯片","330g",supian);
+            productRepository.save(soldProduct1);
+            productRepository.save(soldProduct2);
 
             //增加库存数据
             List<Product> all = productRepository.findAll();
@@ -96,6 +109,28 @@ class SetInitData {
                     all1, //库存
                     all2);//价格
             storeRepository.save(store);
+
+            //新增customer信息
+            Customer c1 = new Customer("张三","广州","8556855");
+            Customer c2 = new Customer("李四","深圳","0203134");
+            Customer c3 = new Customer("王五","珠海","0769257");
+
+            customerRepository.save(c1);
+            customerRepository.save(c2);
+            customerRepository.save(c3);
+
+            //添加Sold信息
+            Sold sold1 = new Sold(store,soldProduct1, new BigDecimal("1500.00"),300);
+            Sold sold2 = new Sold(store,soldProduct1, new BigDecimal("200"),50);
+            soldRepository.save(sold1);
+            soldRepository.save(sold2);
+
+            //添加Vendor信息
+            List<Sold> soldList = new ArrayList<Sold>();
+            soldList.add(sold1);
+            soldList.add(sold2);
+            Vendor vendor1 = new Vendor("广州长盛经销商","长兴路",soldList);
+            vendorRepository.save(vendor1);
         };
     }
 }
