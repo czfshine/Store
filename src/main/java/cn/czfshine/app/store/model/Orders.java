@@ -2,10 +2,9 @@ package cn.czfshine.app.store.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 订单
@@ -17,17 +16,17 @@ public class Orders {
     @GeneratedValue
     int id;
 
-    private Double total;//订单总金额
-    private Integer cid;//订单属于哪位顾客 cid意为customer_id
+    @OneToOne
+    private Customer customer;
     private Date ordertime;//下单时间
-
     //提供有参构造方法 (id属性排除在外)
+    @OneToMany
+    private List<OrderItem> items;
 
-
-    public Orders(Double total, Integer cid, Date ordertime) {
-        this.total = total;
-        this.cid = cid;
+    public Orders( Customer customer, Date ordertime, List<OrderItem> items) {
+        this.customer = customer;
         this.ordertime = ordertime;
+        this.items = items;
     }
 
     private Orders() {
