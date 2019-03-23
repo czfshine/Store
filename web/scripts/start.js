@@ -35,10 +35,10 @@ const createDevServerConfig = require('../config/webpackDevServer.config');
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
-// Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-  process.exit(1);
-}
+// // Warn and crash if required files are missing
+// if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+//   process.exit(1);
+// }
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
@@ -64,7 +64,7 @@ if (process.env.HOST) {
 // We require that you explictly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-checkBrowsers(paths.appPath, isInteractive)
+checkBrowsers(paths.pagename+".html", isInteractive)
   .then(() => {
     // We attempt to use the default port but if it is busy, we offer the user to
     // run on a different port. `choosePort()` Promise resolves to the next free port.
@@ -114,7 +114,7 @@ checkBrowsers(paths.appPath, isInteractive)
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
+      openBrowser(urls.localUrlForBrowser+""+paths.pagename+".html");
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {

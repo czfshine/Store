@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import 'uxcore/assets/iconfont.css';
 import 'uxcore/assets/orange.css';
-import Demo from './page/product.js'
-import MiniDrawer from './components/MiniDrawer.js'
-import client from './data/client.js'
-import TableShower from './components/TableShower.js'
+import MiniDrawer from '../../components/MiniDrawer.js'
+import client from '../../data/client.js'
 import MaterialTable from 'material-table'
-import './icon.css';
+import '../../icon.css';
 class Employee extends React.Component{
 	render() {
 		return (

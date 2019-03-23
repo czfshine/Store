@@ -39,12 +39,163 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+
+  
+function setup() {
+  const entry = {};
+  const plugins = [
+    // // Generates an `index.html` file with the <script> injected.
+    // new HtmlWebpackPlugin(
+    //   Object.assign(
+    //     {},
+    //     {
+    //       inject: true,
+    //       template: paths.appHtml,
+    //     },
+    //     isEnvProduction
+    //       ? {
+    //           minify: {
+    //             removeComments: true,
+    //             collapseWhitespace: true,
+    //             removeRedundantAttributes: true,
+    //             useShortDoctype: true,
+    //             removeEmptyAttributes: true,
+    //             removeStyleLinkTypeAttributes: true,
+    //             keepClosingSlash: true,
+    //             minifyJS: true,
+    //             minifyCSS: true,
+    //             minifyURLs: true,
+    //           },
+    //         }
+    //       : undefined
+    //   )
+    // ),
+    // Inlines the webpack runtime script. This script is too small to warrant
+    // a network request.
+    isEnvProduction &&
+      shouldInlineRuntimeChunk &&
+      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
+    // Makes some environment variables available in index.html.
+    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
+    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // In production, it will be an empty string unless you specify "homepage"
+    // in `package.json`, in which case it will be the pathname of that URL.
+    // In development, this will be an empty string.
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
+    // This gives some necessary context to module not found errors, such as
+    // the requesting resource.
+    new ModuleNotFoundPlugin(paths.appPath),
+    // Makes some environment variables available to the JS code, for example:
+    // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
+    // It is absolutely essential that NODE_ENV is set to production
+    // during a production build.
+    // Otherwise React will be compiled in the very slow development mode.
+    new webpack.DefinePlugin(env.stringified),
+    // This is necessary to emit hot updates (currently CSS only):
+    isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+    // Watcher doesn't work well if you mistype casing in a path so we use
+    // a plugin that prints an error when you attempt to do this.
+    // See https://github.com/facebook/create-react-app/issues/240
+    isEnvDevelopment && new CaseSensitivePathsPlugin(),
+    // If you require a missing module and then `npm install` it, you still have
+    // to restart the development server for Webpack to discover it. This plugin
+    // makes the discovery automatic so you don't have to restart.
+    // See https://github.com/facebook/create-react-app/issues/186
+    isEnvDevelopment &&
+      new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+    isEnvProduction &&
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: 'static/css/[name].[contenthash:8].css',
+        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      }),
+    // Generate a manifest file which contains a mapping of all asset filenames
+    // to their corresponding output file so that tools can pick it up without
+    // having to parse `index.html`.
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json',
+      publicPath: publicPath,
+    }),
+    // Moment.js is an extremely popular library that bundles large locale files
+    // by default due to how Webpack interprets its code. This is a practical
+    // solution that requires the user to opt into importing specific locales.
+    // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
+    // You can remove this if you don't use Moment.js:
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // Generate a service worker script that will precache, and keep up to date,
+    // the HTML & assets that are part of the Webpack build.
+    isEnvProduction &&
+      new WorkboxWebpackPlugin.GenerateSW({
+        clientsClaim: true,
+        exclude: [/\.map$/, /asset-manifest\.json$/],
+        importWorkboxFrom: 'cdn',
+        navigateFallback: publicUrl + '/index.html',
+        navigateFallbackBlacklist: [
+          // Exclude URLs starting with /_, as they're likely an API call
+          new RegExp('^/_'),
+          // Exclude URLs containing a dot, as they're likely a resource in
+          // public/ and not a SPA route
+          new RegExp('/[^/]+\\.[^/]+$'),
+        ],
+      }),
+    // TypeScript type checking
+    useTypeScript &&
+      new ForkTsCheckerWebpackPlugin({
+        typescript: resolve.sync('typescript', {
+          basedir: paths.appNodeModules,
+        }),
+        async: isEnvDevelopment,
+        useTypescriptIncrementalApi: true,
+        checkSyntacticErrors: true,
+        tsconfig: paths.appTsConfig,
+        reportFiles: [
+          '**',
+          '!**/*.json',
+          '!**/__tests__/**',
+          '!**/?(*.)(spec|test).*',
+          '!**/src/setupProxy.*',
+          '!**/src/setupTests.*',
+        ],
+        watch: paths.appSrc,
+        silent: true,
+        // The formatter is invoked directly in WebpackDevServerUtils during development
+        formatter: isEnvProduction ? typescriptFormatter : undefined,
+      }),
+  ].filter(Boolean);
+   const  key=paths.pagename
+    entry[key] = [
+      //require.resolve('./polyfills'),
+      require.resolve('react-dev-utils/webpackHotDevClient'),
+      resolveApp('./src/page/' + key) + '/index.js'
+    ]
+
+    const newPlugins =new HtmlWebpackPlugin(
+      Object.assign(
+        {},
+        {
+          chunks: [key],
+          inject: true,
+          template: paths.appHtml,
+          filename: `${key}.html`
+        }
+      )
+    );
+
+    plugins.push(newPlugins);
+  console.log(entry)
+  return { entry, plugins }
+}
+
+
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -112,7 +263,8 @@ module.exports = function(webpackEnv) {
     }
     return loaders;
   };
-
+  
+ const Setup = setup();///这里要注意要运行一次！
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
@@ -124,25 +276,7 @@ module.exports = function(webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: [
-      // Include an alternative client for WebpackDevServer. A client's job is to
-      // connect to WebpackDevServer by a socket and get notified about changes.
-      // When you save a file, the client will either apply hot updates (in case
-      // of CSS changes), or refresh the page (in case of JS changes). When you
-      // make a syntax error, this client will display a syntax error overlay.
-      // Note: instead of the default WebpackDevServer client, we use a custom one
-      // to bring better experience for Create React App users. You can replace
-      // the line below with these two lines if you prefer the stock client:
-      // require.resolve('webpack-dev-server/client') + '?/',
-      // require.resolve('webpack/hot/dev-server'),
-      isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
-      // Finally, this is your app's code:
-      paths.appIndexJs,
-      // We include the app code last so that if there is a runtime error during
-      // initialization, it doesn't blow up the WebpackDevServer client, and
-      // changing JS code would still trigger a refresh.
-    ].filter(Boolean),
+    entry:Setup.entry,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -265,7 +399,6 @@ module.exports = function(webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
-       
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -468,126 +601,7 @@ module.exports = function(webpackEnv) {
         },
       ],
     },
-    plugins: [
-      // Generates an `index.html` file with the <script> injected.
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            template: paths.appHtml,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
-      // Inlines the webpack runtime script. This script is too small to warrant
-      // a network request.
-      isEnvProduction &&
-        shouldInlineRuntimeChunk &&
-        new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
-      // Makes some environment variables available in index.html.
-      // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
-      // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-      // In production, it will be an empty string unless you specify "homepage"
-      // in `package.json`, in which case it will be the pathname of that URL.
-      // In development, this will be an empty string.
-      new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-      // This gives some necessary context to module not found errors, such as
-      // the requesting resource.
-      new ModuleNotFoundPlugin(paths.appPath),
-      // Makes some environment variables available to the JS code, for example:
-      // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
-      // It is absolutely essential that NODE_ENV is set to production
-      // during a production build.
-      // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(env.stringified),
-      // This is necessary to emit hot updates (currently CSS only):
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      // Watcher doesn't work well if you mistype casing in a path so we use
-      // a plugin that prints an error when you attempt to do this.
-      // See https://github.com/facebook/create-react-app/issues/240
-      isEnvDevelopment && new CaseSensitivePathsPlugin(),
-      // If you require a missing module and then `npm install` it, you still have
-      // to restart the development server for Webpack to discover it. This plugin
-      // makes the discovery automatic so you don't have to restart.
-      // See https://github.com/facebook/create-react-app/issues/186
-      isEnvDevelopment &&
-        new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-      isEnvProduction &&
-        new MiniCssExtractPlugin({
-          // Options similar to the same options in webpackOptions.output
-          // both options are optional
-          filename: 'static/css/[name].[contenthash:8].css',
-          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-        }),
-      // Generate a manifest file which contains a mapping of all asset filenames
-      // to their corresponding output file so that tools can pick it up without
-      // having to parse `index.html`.
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json',
-        publicPath: publicPath,
-      }),
-      // Moment.js is an extremely popular library that bundles large locale files
-      // by default due to how Webpack interprets its code. This is a practical
-      // solution that requires the user to opt into importing specific locales.
-      // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-      // You can remove this if you don't use Moment.js:
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      // Generate a service worker script that will precache, and keep up to date,
-      // the HTML & assets that are part of the Webpack build.
-      isEnvProduction &&
-        new WorkboxWebpackPlugin.GenerateSW({
-          clientsClaim: true,
-          exclude: [/\.map$/, /asset-manifest\.json$/],
-          importWorkboxFrom: 'cdn',
-          navigateFallback: publicUrl + '/index.html',
-          navigateFallbackBlacklist: [
-            // Exclude URLs starting with /_, as they're likely an API call
-            new RegExp('^/_'),
-            // Exclude URLs containing a dot, as they're likely a resource in
-            // public/ and not a SPA route
-            new RegExp('/[^/]+\\.[^/]+$'),
-          ],
-        }),
-      // TypeScript type checking
-      useTypeScript &&
-        new ForkTsCheckerWebpackPlugin({
-          typescript: resolve.sync('typescript', {
-            basedir: paths.appNodeModules,
-          }),
-          async: isEnvDevelopment,
-          useTypescriptIncrementalApi: true,
-          checkSyntacticErrors: true,
-          tsconfig: paths.appTsConfig,
-          reportFiles: [
-            '**',
-            '!**/*.json',
-            '!**/__tests__/**',
-            '!**/?(*.)(spec|test).*',
-            '!**/src/setupProxy.*',
-            '!**/src/setupTests.*',
-          ],
-          watch: paths.appSrc,
-          silent: true,
-          // The formatter is invoked directly in WebpackDevServerUtils during development
-          formatter: isEnvProduction ? typescriptFormatter : undefined,
-        }),
-    ].filter(Boolean),
+    plugins: Setup.plugins,
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
     node: {

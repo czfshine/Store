@@ -40,9 +40,9 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-  process.exit(1);
-}
+// if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+//   process.exit(1);
+// }
 
 // Process CLI arguments
 const argv = process.argv.slice(2);
@@ -63,7 +63,7 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(previousFileSizes => {
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
-    fs.emptyDirSync(paths.appBuild+'/static');
+    //fs.emptyDirSync(paths.appBuild+'/static'); //别删文件啊啊啊啊啊啊
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build

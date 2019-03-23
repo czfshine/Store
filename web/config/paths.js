@@ -65,6 +65,23 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
+/**
+ * 扫描函数
+ */
+const rootpath='src/page/'
+function Scan() {
+  const dirs = fs.readdirSync(resolveApp(rootpath));
+  const map = {};
+  dirs.forEach((file) => {
+    const state = fs.statSync(resolveApp(rootpath + file))
+    if (state.isDirectory()) {
+      map[file] = resolveApp(rootpath + file) + '/index.js'
+    }
+  })
+  return map
+}
+const dirs = Scan();
+const pagename=process.argv[2]
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -72,7 +89,7 @@ module.exports = {
   appBuild: resolveApp('../src/main/resources/'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveModule(resolveApp, 'src/index'),
+  //appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
@@ -82,6 +99,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  pagename
 };
 
 
