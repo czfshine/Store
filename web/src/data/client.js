@@ -3,8 +3,12 @@ const defaultRequest = require('rest/interceptor/defaultRequest');
 const mime = require('rest/interceptor/mime');
 const errorCode = require('rest/interceptor/errorCode');
 const baseRegistry = require('rest/mime/registry');
-
 const registry = baseRegistry.child();
+
+/**
+ * 与服务器交互的客户端
+ * 
+ * */
 
 var list=function() {
 

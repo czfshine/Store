@@ -5,7 +5,9 @@ import 'uxcore/assets/orange.css';
 import Demo from './page/product.js'
 import MiniDrawer from './components/MiniDrawer.js'
 
-import client from './client.js'
+import client from './data/client.js'
+
+import TableShower from './components/TableShower.js'
 class Employee extends React.Component{
 	render() {
 		return (
@@ -61,8 +63,8 @@ class App extends Component {
     return (
       <div className="App">
           <MiniDrawer>
-            <B></B>
-            
+            <TableShower/>
+        
           </MiniDrawer>
       </div>
 

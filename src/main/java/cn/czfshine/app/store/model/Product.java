@@ -13,12 +13,17 @@ import javax.persistence.*;
 @Data
 @Entity
 public class Product {
+
     private @Id @GeneratedValue int proid;
+
+
     private String name;
     private String size;
+
     @ManyToOne
     @JoinColumn(name="id")
     private InstProduct inst;
+
 
     public Product(String name, String size, InstProduct inst) {
         this.name = name;
