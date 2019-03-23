@@ -58,15 +58,10 @@ class B extends Component {
 		)
 	}
 }
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-          <MiniDrawer>
-					<MaterialTable
-  columns={[
-    {
+/**
+ * url += 'per_page=' + query.pageSize
+			url += '&page=' + (query.page + 1)
+			    {
       title: 'Avatar',
       field: 'avatar',
       render: rowData => (
@@ -76,22 +71,30 @@ class App extends Component {
         />
       ),
     },
-    { title: 'Id', field: 'id' },
-    { title: 'First Name', field: 'first_name' },
-    { title: 'Last Name', field: 'last_name' },
+ */
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+          <MiniDrawer>
+					<MaterialTable
+  columns={[
+    { title: '商品名', field: 'name' },
+    { title: '规格', field: 'size' },
   ]}
   data={query =>
     new Promise((resolve, reject) => {
-      let url = 'https://reqres.in/api/users?'
-      url += 'per_page=' + query.pageSize
-      url += '&page=' + (query.page + 1)
+			let url = '/data/products?'
+			url += 'size=' + query.pageSize
+			url += '&page=' + (query.page )
       fetch(url)
         .then(response => response.json())
         .then(result => {
           resolve({
-            data: result.data,
-            page: result.page - 1,
-            totalCount: result.total,
+            data: result._embedded.products,
+            page: result.page.number,
+            totalCount: result.page.totalElements,
           })
         })
     })
