@@ -39,3 +39,6 @@ src/main/resources/manifest.json
 src/main/resources/index.html
 src/main/resources/favicon.ico
 src/main/resources/asset-manifest.json
+
+src/main/resources/*.html
+src/main/resources/*/*.html
