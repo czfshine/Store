@@ -18,148 +18,148 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import Person from '@material-ui/icons/Person'
 const cardstyles = {
-		card: {
-				minWidth: 275,
-				maxWidth: 300
-		},
-		bullet: {
-				display: 'inline-block',
-				margin: '0 2px',
-				transform: 'scale(0.8)'
-		},
-		title: {
-				fontSize: 14
-		},
-		pos: {
-				marginBottom: 12
-		}
+  card: {
+    minWidth: 275,
+    maxWidth: 300
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)'
+  },
+  title: {
+    fontSize: 14
+  },
+  pos: {
+    marginBottom: 12
+  }
 };
 
 function SimpleCard(props) {
-		const {classes} = props;
-		const bull = <span className={classes.bullet}>•</span>;
+  const {classes} = props;
+  const bull = <span className={classes.bullet}>•</span>;
 
-		return (
-				<Card className={classes.card}>
-						<CardContent>
-								<Typography variant="h5" component="h2">
-										<Person/> {props.name}
-								</Typography>
-								<Typography className={classes.pos} color="textSecondary">
-										免登录
-								</Typography>
-								<Typography component="p">
-										{props.datas}
-								</Typography>
-						</CardContent>
-						<CardActions>
-								<Button size="small">登录</Button>
-						</CardActions>
-				</Card>
-		);
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        <Typography variant="h5" component="h2">
+          <Person/> {props.name}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          免登录
+        </Typography>
+        <Typography component="p">
+          {props.datas}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">登录</Button>
+      </CardActions>
+    </Card>
+  );
 }
 SimpleCard.propTypes = {
-		classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 SimpleCard = withStyles(cardstyles)(SimpleCard)
 
 const styles = theme => ({
-		root: {
-				flexGrow: 1
-		},
-		paper: {
-				margin: 10
-		},
-		control: {
-				padding: 10
-		}
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    margin: 10
+  },
+  control: {
+    padding: 10
+  }
 });
 
 class GuttersGrid extends React.Component {
-		state = {
-				spacing: '16'
-		};
+  state = {
+    spacing: '16'
+  };
 
-		handleChange = key => (event, value) => {
-				this.setState({[key]: value});
-		};
+  handleChange = key => (event, value) => {
+    this.setState({[key]: value});
+  };
 
-		render() {
-				const {classes} = this.props;
-				return (
-						<Grid container className={classes.root} spacing={14}>
-								<Grid item xs={12}>
-										<Grid container className={classes.demo} justify="center" spacing={20}>
-												<Grid key='1' item>
-														<Paper className={classes.paper}>
-																<SimpleCard name="售货员" datas="我是一个售货员"/>
-														</Paper>
-												</Grid>
-												<Grid key='2' item>
-														<Paper className={classes.paper}>
-																<SimpleCard name="进货员" datas="我是一个进货员"/>
-														</Paper>
-												</Grid>
-												<Grid key='2' item>
-														<Paper className={classes.paper}>
-																<SimpleCard name="清点员" datas="我是一个清点员"/>
-														</Paper>
-												</Grid>
-										</Grid>
-								</Grid>
-						</Grid>
-				);
-		}
+  render() {
+    const {classes} = this.props;
+    return (
+      <Grid container className={classes.root} spacing={14}>
+        <Grid item xs={12}>
+          <Grid container className={classes.demo} justify="center" spacing={20}>
+            <Grid key='1' item>
+              <Paper className={classes.paper}>
+                <SimpleCard name="售货员" datas="我是一个售货员"/>
+              </Paper>
+            </Grid>
+            <Grid key='2' item>
+              <Paper className={classes.paper}>
+                <SimpleCard name="进货员" datas="我是一个进货员"/>
+              </Paper>
+            </Grid>
+            <Grid key='2' item>
+              <Paper className={classes.paper}>
+                <SimpleCard name="清点员" datas="我是一个清点员"/>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
 }
 
 GuttersGrid.propTypes = {
-		classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 GuttersGrid = withStyles(styles)(GuttersGrid);
 
 function SimpleAppBar(props) {
-		const {classes} = props;
+  const {classes} = props;
 
-		return (
-				<div className={classes.root}>
-						<AppBar position="static" color="primary">
-								<Toolbar>
-										<Typography variant="h6" color="inherit">
-												我的进销存系统
-										</Typography>
-								</Toolbar>
-						</AppBar>
-				</div>
-		);
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Typography variant="h6" color="inherit">
+            我的进销存系统
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
 
 SimpleAppBar.propTypes = {
-		classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 SimpleAppBar = withStyles(styles)(SimpleAppBar);
 
 class App extends Component {
-		render() {
-				return (
-						<div className="App">
+  render() {
+    return (
+      <div className="App">
 
-								<SimpleAppBar/>
-								<Typography
-										style={{
-										margin: 30
-								}}
-										color="primary"
-										component="h4"
-										variant="h4">
-										选择你要登录的角色:
-								</Typography>
-								<GuttersGrid/>
-						</div>
+        <SimpleAppBar/>
+        <Typography
+          style={{
+          margin: 30
+        }}
+          color="primary"
+          component="h4"
+          variant="h4">
+          选择你要登录的角色:
+        </Typography>
+        <GuttersGrid/>
+      </div>
 
-				);
-		}
+    );
+  }
 }
 
 export default App;
