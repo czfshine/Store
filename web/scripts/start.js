@@ -91,7 +91,8 @@ checkBrowsers(paths.pagename + ".html", isInteractive).then(() => {
       clearConsole();
     }
     console.log(chalk.cyan('Starting the development server...\n'));
-    openBrowser(urls.localUrlForBrowser + "" + paths.pagename + ".html");
+    openBrowser(urls.localUrlForBrowser);
+    //openBrowser(urls.localUrlForBrowser + "" + paths.pagename + ".html");
   });
 
   ['SIGINT', 'SIGTERM'].forEach(function (sig) {
