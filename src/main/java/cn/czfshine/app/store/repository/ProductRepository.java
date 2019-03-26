@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 
 
 public interface ProductRepository extends JpaRepository<Product,Integer> {
+    public Product findFirstByGan();
 }

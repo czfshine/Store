@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.*;
+import java.util.Random;
 
 /**商品对象
  * @author:czfshine
@@ -20,15 +21,24 @@ public class Product {
     private String name;
     private String size;
 
+    private Long gan; //商品唯一识别码
     @ManyToOne
     @JoinColumn(name="id")
     private InstProduct inst;
 
-
     public Product(String name, String size, InstProduct inst) {
+        this.gan = Math.abs(new Random().nextLong());
         this.name = name;
         this.size = size;
         this.inst = inst;
     }
+
+    public Product(String name, String size, Long gan, InstProduct inst) {
+        this.name = name;
+        this.size = size;
+        this.gan = gan;
+        this.inst = inst;
+    }
+
     private Product(){}
 }
