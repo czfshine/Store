@@ -48,7 +48,7 @@ class SetInitData {
     private void initData(InstProductRepository instProductRepository, ProductRepository productRepository, TypeRepository typeRepository, StorageRepository storageRepository, StoreRepository storeRepository, SaleRepository saleRepository, CustomerRepository customerRepository, SoldRepository soldRepository, VendorRepository vendorRepository) {
         log.info("Preloading data ...");
 
-        //注意外键的顺序   
+        //注意外键的顺序
 
         //商品类别
         Type food = new Type("食品");
