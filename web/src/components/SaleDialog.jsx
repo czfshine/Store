@@ -2,14 +2,9 @@ import React, { Component } from "react";
 import "uxcore/assets/iconfont.css";
 import "uxcore/assets/blue.css";
 import { Button } from "uxcore";
-import { Select } from "uxcore";
-import { RadioGroup } from "uxcore";
 import { Table } from "uxcore";
 import { Icon } from "uxcore";
 const { Constants } = Table;
-const { Option } = Select;
-const RadioItem = RadioGroup.Item;
-
 const mockData = {
   data: []
 };
@@ -21,6 +16,7 @@ class Demo extends Component {
       data: mockData,
       showOtherColumn: false
     };
+    this.allGan = null;
   }
   getTableValues() {
     console.log(this.table.getData());
@@ -28,6 +24,7 @@ class Demo extends Component {
   handleTableChange(data, dataKey, pass) {
     console.log(data.data);
   }
+  addProduct(Gan) {}
   render() {
     const me = this;
     const columns = [
@@ -102,6 +99,25 @@ class Demo extends Component {
       jsxdata: me.state.data,
       className: "kuma-uxtable-split-line",
       actionBar: {
+        模拟扫码: () => {
+          if (this.allGan === null) {
+            new Promise((resolve, reject) => {
+              try {
+                fetch("/api/getallgan")
+                  .then(response => response.json())
+                  .then(result => {
+                    this.allGan = result.data;
+                    console.log(this.allGan);
+                    var a = Math.round(Math.random() * this.allGan.length);
+                    this.addProduct(this.allGan[a]);
+                  });
+              } catch {}
+            });
+          } else {
+            var a = Math.round(Math.random() * this.allGan.length);
+            this.addProduct(this.allGan[a]);
+          }
+        },
         新增行: () => {
           me.table.addEmptyRow();
         }

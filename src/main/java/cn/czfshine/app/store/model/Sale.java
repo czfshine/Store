@@ -15,6 +15,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name="sale")
 public class Sale {
     @Id
     @GeneratedValue
@@ -22,10 +23,13 @@ public class Sale {
     private BigDecimal pricing;//价格
     @ManyToOne
     private Product product;
-
-    public Sale(BigDecimal pricing, Product product) {
+    @ManyToOne
+    private Store store;
+    public Sale(BigDecimal pricing, Product product, Store store) {
         this.pricing = pricing;
         this.product = product;
+        this.store = store;
     }
+
     private Sale(){}
 }

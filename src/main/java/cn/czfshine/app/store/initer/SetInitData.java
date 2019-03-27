@@ -98,23 +98,21 @@ class SetInitData {
         /****增加一个商店***/
         //取库存
         List<Storage> all1 = storageRepository.findAll();
+        //增加商店对象
+        Store store = new Store("华山超市", "华南农业大学华山区学生宿舍",
+                all1);//价格
+        storeRepository.save(store);
+
 
         //增加商品价格
         for (Storage s: all1
              ) {
             Product product = s.getProduct();
             //todo:随机
-            saleRepository.save(new Sale(new BigDecimal("1.00"), product));
+            saleRepository.save(new Sale(new BigDecimal("1.00"), product,store));
         }
-
         //取商品价格
         List<Sale> all2 = saleRepository.findAll();
-
-        //增加商店对象
-        Store store = new Store("华山超市", "华南农业大学华山区学生宿舍",
-                all1, //库存
-                all2);//价格
-        storeRepository.save(store);
 
         //新增customer信息
         Customer c1 = new Customer("张三","广州","8556855");

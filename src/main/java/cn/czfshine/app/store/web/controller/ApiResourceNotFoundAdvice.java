@@ -22,7 +22,7 @@ public class ApiResourceNotFoundAdvice {
     @ExceptionHandler(ApiResourceNotFoundException.class) //对应的异常
     @ResponseStatus(HttpStatus.NOT_FOUND) //状态码 404
     String employeeNotFoundHandler(ApiResourceNotFoundException ex) {
-        return "对应的资源未找到"; //todo 详细信息
+        return ex.getMessage(); //todo 详细信息
     }
 
 }
