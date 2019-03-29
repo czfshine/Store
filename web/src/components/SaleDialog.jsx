@@ -4,19 +4,31 @@ import "uxcore/assets/blue.css";
 import { Button } from "uxcore";
 import { Table } from "uxcore";
 import { Icon } from "uxcore";
+import getStoreId from "../data/store"
+import { Message } from 'uxcore';
 const { Constants } = Table;
+
 const mockData = {
   data: []
 };
 
+const rowdatamap={}
 class Demo extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       data: mockData,
-      showOtherColumn: false
+      showOtherColumn: false,
+      total:0.0,
     };
     this.allGan = null;
+    this.storeid=0;
+    this.jsxid=0;
+  }
+
+  componentWillMount(): void {
+    getStoreId(this);
   }
   getTableValues() {
     console.log(this.table.getData());
@@ -24,7 +36,58 @@ class Demo extends Component {
   handleTableChange(data, dataKey, pass) {
     console.log(data.data);
   }
-  addProduct(Gan) {}
+  addProduct(Gan) {
+    let url='/api/sale?'
+    url+="productid="+Gan;
+    url+="&storeid="+this.storeid;
+    new Promise((resolve, reject) => {
+      try {
+        fetch(url)
+            .then(response => response.json())
+            .then(result => {
+              /*
+              {"id":102,"pricing":1.00,"product":{"proid":25,"name":"无糖薯片","size":"500g","gan":1315520554,
+              "inst":{..},
+              "store":{..}//todo
+               */
+              if(rowdatamap[Gan]==undefined){
+                let rowData={
+                  "EAN":result.product.gan,
+                  "productname":result.product.name,
+                  "pricing":result.pricing,
+                  "count":1,
+                  "size":result.product.size,
+                  "total":result.pricing,
+                  "__treeId__":""+this.jsxid
+                }
+                this.jsxid++;
+                rowdatamap[Gan]=rowData;
+                this.table.addRow(rowData);
+
+              }else{
+                let row=rowdatamap[Gan];
+                this.table.delRow(rowdatamap[Gan])
+                row.count+=1;
+                row.total+=result.pricing;
+                rowdatamap[Gan]=row;
+                /**修改一行**/
+                //todo:uxcore的api太难用了,下面是猥琐的方法:
+                this.table.fetchData(); //清除所有数据咯
+                for(var rowkey in rowdatamap){
+                  this.table.addRow(rowdatamap[rowkey]);
+                }
+              }
+              this.table.saveAllRow();
+              this.setState({total:this.state.total+result.pricing});
+
+            });
+        Message['success']({
+          content: `扫描到`+Gan,
+          className: 'kuma-message-small',
+        });
+      } catch {}
+    });
+  }
   render() {
     const me = this;
     const columns = [
@@ -37,23 +100,29 @@ class Demo extends Component {
         type: "text"
       },
       {
+        dataKey: "size",
+        editKey: "size",
+        title: "规格",
+        width: 100,
+        type: "text"
+      },
+      {
         dataKey: "pricing",
         editKey: "pricing",
         title: "单价",
-
-        width: 200,
+        width: 100,
         type: "text"
       },
       {
         dataKey: "count",
         title: "数量",
-        width: 200,
+        width: 100,
         type: "text"
       },
       {
         dataKey: "total",
         title: "总价",
-        width: 200,
+        width: 100,
         type: "text"
       },
       {
@@ -72,6 +141,7 @@ class Demo extends Component {
           {
             title: "保存",
             callback: rowData => {
+              console.log(rowData)
               me.table.saveRow(rowData);
             },
             mode: Constants.MODE.EDIT
@@ -79,6 +149,8 @@ class Demo extends Component {
           {
             title: "删除",
             callback: rowData => {
+              this.setState({total:this.state.total-rowData.total});
+              rowdatamap[rowData.gan]=undefined;
               me.table.delRow(rowData);
             },
             mode: Constants.MODE.VIEW
@@ -108,13 +180,13 @@ class Demo extends Component {
                   .then(result => {
                     this.allGan = result.data;
                     console.log(this.allGan);
-                    var a = Math.round(Math.random() * this.allGan.length);
+                    var a = Math.round(Math.random() * (this.allGan.length-1));
                     this.addProduct(this.allGan[a]);
                   });
               } catch {}
             });
           } else {
-            var a = Math.round(Math.random() * this.allGan.length);
+            var a = Math.round(Math.random() * (this.allGan.length-1));
             this.addProduct(this.allGan[a]);
           }
         },
@@ -132,7 +204,7 @@ class Demo extends Component {
               <Icon usei name="biaoge1" /> 总计
             </div>
           );
-        } else if (column.dataKey === "total") return "10";
+        } else if (column.dataKey === "total") return <div>{this.state.total}</div>;
         return null;
       }
     };

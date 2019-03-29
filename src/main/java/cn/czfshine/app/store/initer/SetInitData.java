@@ -87,9 +87,7 @@ class SetInitData {
         productRepository.save(soldProduct2);
 
         //增加库存数据
-        List<Product> all = productRepository.findAll();
-        List<Product> products = all.subList(1, 10);
-
+        List<Product> products = productRepository.findAll();
         for (Product p:products
              ) {
             storageRepository.save(new Storage(p, new Random().nextInt(100)));
@@ -109,7 +107,9 @@ class SetInitData {
              ) {
             Product product = s.getProduct();
             //todo:随机
-            saleRepository.save(new Sale(new BigDecimal("1.00"), product,store));
+            Random r = new Random();
+            double max   = 100;
+            saleRepository.save(new Sale(new BigDecimal(Math.floor((r.nextDouble() * max) * 100) / 100), product,store));
         }
         //取商品价格
         List<Sale> all2 = saleRepository.findAll();

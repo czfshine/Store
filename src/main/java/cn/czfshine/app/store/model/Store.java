@@ -1,8 +1,6 @@
 package cn.czfshine.app.store.model;
 
-import com.sun.javafx.beans.IDProperty;
 import lombok.Data;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -10,5 +10,5 @@ import java.util.List;
  */
 @Data
 public class AllGan {
-    List<Long> data;
+    List<Integer> data;
 }

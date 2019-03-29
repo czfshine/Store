@@ -10,6 +10,8 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+
+
 import SaleDialog from "../components/SaleDialog";
 class Employee extends React.Component {
   render() {
@@ -49,9 +51,11 @@ class B extends Component {
     this.state = {
       employees: []
     };
+    this.storeid=0;
   }
 
   componentDidMount() {
+
     //TODO
     client({ method: "GET", path: "/data/products" }).done(response => {
       this.setState({ employees: response.entity._embedded.products });

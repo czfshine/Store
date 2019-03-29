@@ -21,19 +21,19 @@ public class Product {
     private String name;
     private String size;
 
-    private Long gan; //商品唯一识别码
+    private int gan; //商品唯一识别码
     @ManyToOne
     @JoinColumn(name="id")
     private InstProduct inst;
 
     public Product(String name, String size, InstProduct inst) {
-        this.gan = Math.abs(new Random().nextLong());
+        this.gan = Math.abs(new Random().nextInt());
         this.name = name;
         this.size = size;
         this.inst = inst;
     }
 
-    public Product(String name, String size, Long gan, InstProduct inst) {
+    public Product(String name, String size, int gan, InstProduct inst) {
         this.name = name;
         this.size = size;
         this.gan = gan;

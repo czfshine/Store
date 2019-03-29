@@ -42,7 +42,7 @@ public class ProductApiController {
     public AllGan getAllGan() {
 
         AllGan res = new AllGan();
-        ArrayList<Long> longs = new ArrayList<>();
+        ArrayList<Integer> longs = new ArrayList<>();
 
         List<Product> all = productRepository.findAll();
         for (Product p : all) {
@@ -61,8 +61,9 @@ public class ProductApiController {
      * @throws ApiResourceNotFoundException
      */
     @GetMapping("/api/Product/gan/{gan}")
-    public Product getByGan(@PathVariable Long gan) throws ApiResourceNotFoundException {
+    public Product getByGan(@PathVariable int gan) throws ApiResourceNotFoundException {
         Product firstByGan = productRepository.findFirstByGan(gan);
+        log.info("get gan"+gan);
         if(firstByGan==null)
             throw new ApiResourceNotFoundException("");
         return firstByGan;
@@ -80,14 +81,14 @@ public class ProductApiController {
                             @RequestParam("storeid") int storeId) throws ApiResourceNotFoundException {
         Optional<Store> byId = storeRepository.findById(storeId);
         if(!byId.isPresent()){
+
             throw new ApiResourceNotFoundException("store id="+storeId+"不存在");
         }
         Store store = byId.get();
-        Optional<Product> productid=productRepository.findById(proId);
-        if(!productid.isPresent()){
-            throw new ApiResourceNotFoundException("product id="+productid+"不存在");
+        Product product=productRepository.findFirstByGan(proId);
+        if(product==null){
+            throw new ApiResourceNotFoundException("product id="+proId+"不存在");
         }
-        Product product = productid.get();
         Sale byProductAndStore = saleRepository.findByProductAndStore(product, store);
         if(byProductAndStore==null){
             throw new ApiResourceNotFoundException("商店没有销售该商品");
