@@ -40,9 +40,13 @@ class SetInitData {
     ) {
 
         return args -> {
-            if(productRepository.count()==0)
+            if (productRepository.count() == 0) {
                 //如果数据库没有数据的话才装填数据进去
                 initData(instProductRepository, productRepository, typeRepository, storageRepository, storeRepository, saleRepository, customerRepository, soldRepository, vendorRepository);
+
+            } else {
+                log.info("had data.");
+            }
         };
     }
     private void initData(InstProductRepository instProductRepository, ProductRepository productRepository, TypeRepository typeRepository, StorageRepository storageRepository, StoreRepository storeRepository, SaleRepository saleRepository, CustomerRepository customerRepository, SoldRepository soldRepository, VendorRepository vendorRepository) {

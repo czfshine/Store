@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -82,10 +82,20 @@ const styles = theme => ({
 });
 
 class MiniDrawer extends React.Component {
-  state = {
-    open: false
-  };
 
+
+  constructor(props){
+    super(props);
+    this.state = {
+      open: false,
+      title:"aaa"
+    };
+    this.setState({title:props.title});
+    this.state.title=props.title;
+    console.log(props);
+    console.log(this.state.title);
+    this.setTitle = this.setTitle.bind(this)
+  }
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
@@ -93,13 +103,15 @@ class MiniDrawer extends React.Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
-
   static topage(pageurl, e) {
     window.location.pathname = pageurl;
   }
+
+  setTitle(newtitle:string){
+    this.setState({title:newtitle})
+  }
   render() {
     const { classes, theme } = this.props;
-
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -121,7 +133,7 @@ class MiniDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              我的进销存系统 - {this.props.title}
+              我的进销存系统 - {this.state.title}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -164,7 +176,7 @@ class MiniDrawer extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          {this.props.children}
+            {this.props.children}
         </main>
       </div>
     );
@@ -173,7 +185,8 @@ class MiniDrawer extends React.Component {
 
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
+  title:PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(MiniDrawer);

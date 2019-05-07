@@ -29,9 +29,25 @@ class Demo extends Component {
 
   componentWillMount(): void {
     getStoreId(this);
+    this.setState({title:"销售窗口"})
   }
   getTableValues() {
-    console.log(this.table.getData());
+    var data = this.table.getData();
+    console.log(data);
+    fetch('/api/oder/post', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+    Message['success']({
+      content: '提交成功',
+      className: 'kuma-message-small',
+    });
+    this.table.fetchData(); //清除所有数据咯
+
   }
   handleTableChange(data, dataKey, pass) {
     console.log(data.data);

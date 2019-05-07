@@ -5,10 +5,15 @@ import App from "./App";
 import Sale from "./page/sale";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-console.log("code running...");
-ReactDOM.render(
+
+/**
+ * 项目入口点
+ */
+
+ReactDOM.render( //todo:另外两个页面
   <Router>
     <div>
+        {/*根据url的内容路由组件*/}
       <Route path="/" exact component={App} />
       <Route path="/sale/" component={Sale} />
       <Route path="/sole/" component={App} />

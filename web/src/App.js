@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import "./App.css";
 import "./icon.css";
 import PropTypes from "prop-types";
@@ -13,9 +12,16 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-
 import Person from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
+
+/**
+ *首页，登录界面等
+ *
+ */
+
+// 卡片
+
 const cardstyles = {
   card: {
     minWidth: 275,
@@ -34,9 +40,9 @@ const cardstyles = {
   }
 };
 
+//卡片组件
 function SimpleCard(props) {
   const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Card className={classes.card}>
@@ -67,7 +73,9 @@ SimpleCard.propTypes = {
 };
 SimpleCard = withStyles(cardstyles)(SimpleCard);
 
-const styles = theme => ({
+// 表格布局
+
+const styles = {
   root: {
     flexGrow: 1
   },
@@ -77,7 +85,8 @@ const styles = theme => ({
   control: {
     padding: 10
   }
-});
+};
+
 
 class GuttersGrid extends React.Component {
   state = {
@@ -127,6 +136,7 @@ GuttersGrid.propTypes = {
 
 GuttersGrid = withStyles(styles)(GuttersGrid);
 
+// 顶栏
 function SimpleAppBar(props) {
   const { classes } = props;
 
@@ -149,6 +159,7 @@ SimpleAppBar.propTypes = {
 
 SimpleAppBar = withStyles(styles)(SimpleAppBar);
 
+//页面组件
 class App extends Component {
   render() {
     return (
