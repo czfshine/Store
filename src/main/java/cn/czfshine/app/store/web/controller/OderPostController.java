@@ -9,6 +9,7 @@ import cn.czfshine.app.store.repository.OrderItemRepository;
 import cn.czfshine.app.store.repository.OrdersRepository;
 import cn.czfshine.app.store.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,17 +25,14 @@ import java.util.Map;
 @Slf4j
 public class OderPostController {
 
+    @Autowired
     private OrderItemRepository orderItemRepository;
+    @Autowired
     private OrdersRepository ordersRepository;
+    @Autowired
     private ProductRepository productRepository;
+    @Autowired
     private CustomerRepository customerRepository;
-
-    public OderPostController(OrderItemRepository orderItemRepository, OrdersRepository ordersRepository, ProductRepository productRepository, CustomerRepository customerRepository) {
-        this.orderItemRepository = orderItemRepository;
-        this.ordersRepository = ordersRepository;
-        this.productRepository = productRepository;
-        this.customerRepository = customerRepository;
-    }
 
     @PostMapping("/api/oder/post")
     public void recvPost(@RequestBody String json) {

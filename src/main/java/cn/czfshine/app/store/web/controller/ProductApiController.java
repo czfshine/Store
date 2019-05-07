@@ -9,6 +9,7 @@ import cn.czfshine.app.store.repository.ProductRepository;
 import cn.czfshine.app.store.repository.SaleRepository;
 import cn.czfshine.app.store.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,14 +27,13 @@ import java.util.Optional;
 @RestController
 @Slf4j
 public class ProductApiController {
-    private final ProductRepository productRepository;
-    private final StoreRepository storeRepository;
-    private final SaleRepository saleRepository;
-    public ProductApiController(ProductRepository productRepository, StoreRepository storeRepository, SaleRepository saleRepository) {
-        this.productRepository = productRepository;
-        this.storeRepository = storeRepository;
-        this.saleRepository = saleRepository;
-    }
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private StoreRepository storeRepository;
+    @Autowired
+    private SaleRepository saleRepository;
+
 
     /** 获取当前数据库中的所有商品唯一识别码
      * @return

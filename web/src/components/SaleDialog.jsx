@@ -53,7 +53,7 @@ class Demo extends Component {
     console.log(data.data);
   }
   addProduct(Gan) {
-    let url='/api/sale?'
+    let url='/api/sale?';
     url+="productid="+Gan;
     url+="&storeid="+this.storeid;
     new Promise((resolve, reject) => {

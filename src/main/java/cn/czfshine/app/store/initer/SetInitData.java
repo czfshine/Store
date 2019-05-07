@@ -3,6 +3,7 @@ package cn.czfshine.app.store.initer;
 import cn.czfshine.app.store.model.*;
 import cn.czfshine.app.store.repository.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,34 +23,45 @@ import java.util.Random;
 @Configuration
 @Slf4j
 class SetInitData {
+    @Autowired
+    private InstProductRepository instProductRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private TypeRepository typeRepository;
+    @Autowired
+    private StorageRepository storageRepository;
+    @Autowired
+    private StoreRepository storeRepository;
+    @Autowired
+    private SaleRepository saleRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
+    @Autowired
+    private SoldRepository soldRepository;
+    @Autowired
+    private VendorRepository vendorRepository;
 
-    //从CustomerRepository开始的5个参数是新增的
     @Bean
-    CommandLineRunner initDatabase(InstProductRepository instProductRepository,
-                                   ProductRepository productRepository,
-                                   TypeRepository typeRepository,
-                                   StorageRepository storageRepository,
-                                   StoreRepository storeRepository,
-                                   SaleRepository saleRepository,
-                                   CustomerRepository customerRepository,
-                                   OrderItemRepository orderItemRepository,
-                                   OrdersRepository ordersRepository,
-                                   SoldRepository soldRepository,
-                                   VendorRepository vendorRepository
+    CommandLineRunner initDatabase(
 
     ) {
 
         return args -> {
             if (productRepository.count() == 0) {
                 //如果数据库没有数据的话才装填数据进去
-                initData(instProductRepository, productRepository, typeRepository, storageRepository, storeRepository, saleRepository, customerRepository, soldRepository, vendorRepository);
-
+                initData();
             } else {
                 log.info("had data.");
             }
         };
     }
-    private void initData(InstProductRepository instProductRepository, ProductRepository productRepository, TypeRepository typeRepository, StorageRepository storageRepository, StoreRepository storeRepository, SaleRepository saleRepository, CustomerRepository customerRepository, SoldRepository soldRepository, VendorRepository vendorRepository) {
+
+    private void initData() {
         log.info("Preloading data ...");
 
         //注意外键的顺序
