@@ -29,6 +29,9 @@ public class Orders {
         this.items = items;
     }
 
-    private Orders() {
+    /*将访问修饰符由private改为public*/
+//    修改原因:OrderController类的ordersRepository.getOne(133);执行出错,查看控制台的错误信息
+//    发现它说的是没有默认的无参构造方法,于是修改,修改后通过.
+    public Orders() {
     }
 }

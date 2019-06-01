@@ -4,6 +4,7 @@ import cn.czfshine.app.store.model.Customer;
 import cn.czfshine.app.store.model.OrderItem;
 import cn.czfshine.app.store.model.Orders;
 import cn.czfshine.app.store.model.Product;
+import cn.czfshine.app.store.model.constant.StatusCode;
 import cn.czfshine.app.store.model.dto.BasicResponse;
 import cn.czfshine.app.store.repository.CustomerRepository;
 import cn.czfshine.app.store.repository.OrderItemRepository;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 订单相关的控制器
@@ -81,15 +79,91 @@ public class OrderController {
         }
     }
 
+    /**
+     * wrote by xuming
+     * @date:2019/06/01 14:14
+     * 现在要实现 删除订单 功能;我们将该功能细分为两个子功能:
+     * 1.订单从哪来?==>取随机订单信息
+     * 2.拿到指定的订单信息后,删除它.
+     * @return
+     * 经postman测试通过
+     */
     @GetMapping("/api/getRandomOrder")
     public BasicResponse getRandomOrder() {
-        Orders one = ordersRepository.getOne(0);
-        List<OrderItem> items = one.getItems();
-        for (OrderItem oi : items
-        ) {
-            oi.getProduct();
-        }
+        /*本来应该将所有订单的id放在一个集合中,通过随机取集合中的一个元素,来实现取随机订单的功能*/
+        /*但这里为了方便,先将订单id写死*/
+        //目前数据库中可用的订单id只有133和139这两个
+        //new一个BasicResponse类对象,将它的三个属性封装完毕,并返回
+        //由于是@RestController,会自动将Java实体转为Json对象
+        //1.new一个BasicResponse类对象
+        BasicResponse basicResponse = new BasicResponse();
+        //2.完成code message data三个属性的封装
+        //模拟取得一个订单[该订单的id写死为139]
+        Orders randomOrder = ordersRepository.getOne(139);
+        /*该订单中的具体订单项*/
+        List<OrderItem> items = randomOrder.getItems();
+        //如果该订单中的订单项为空,则返回
+        if(items==null || items.size()==0){
+            basicResponse.setCode(StatusCode.ORDERITEM_EMPTY_ERROR.getCode());
+            basicResponse.setMessage(StatusCode.ORDERITEM_EMPTY_ERROR.getMsg());
+            basicResponse.setData(null);
+        }else{
+            //订单项不为空
+            //订单中有订单项,订单项里有具体的商品
+            //那么传回的data是什么?
+/*
+            "orderId":123,
+            "products":[
+            			{
+            				"productsId":"123456",
+            				"name":"可乐",
+            				"price":"12.",
+            				"count":"2"
+            			},
+            			{
+            				"productsId":"123457",
+            				"name":"可乐",
+            				"price":"12.7",
+            				"count":"2"
+            			},
+            			{
+            				"productsId":"123458",
+            				"name":"可乐",
+            				"price":"12.6",
+            				"count":"2"
+            			}]
+*/
+            //返回的data是Map<String,Object>
+            //第一个key-value对 : "orderId" - orderId的数值
+            //第二个key-value对 : "products" - List<Map<String,String>
+            Map<String,Object> data = new HashMap<>();
+            //将第一个key-value对put进data中
+            data.put("orderId",randomOrder.getId());
+            List<Map<String,String>> list = new ArrayList<>();
+            //遍历订单项
+            for(OrderItem orderItem : items){
+                Map<String,String> productInfoMap = new HashMap<>();
+                //value部分+""是因为int不能直接toString()
+                productInfoMap.put("productsId",orderItem.getProduct().getProid()+"");
+                productInfoMap.put("name",orderItem.getProduct().getName()+"");
+                productInfoMap.put("price",orderItem.getPricing()+"");
+                productInfoMap.put("count",orderItem.getCount()+"");
+                //将productInfoMap添加进valueOfMap2中
+                list.add(productInfoMap);
+            }
+            //将第二个key-value对put进data中
+            data.put("products",list);
 
-        return null;
+            //至此,订单项不为空的时候,data封装完毕
+            //basicResponse赋值3个属性,并返回
+            basicResponse.setCode(StatusCode.SUCCESS.getCode());
+            basicResponse.setMessage(StatusCode.SUCCESS.getMsg());
+            basicResponse.setData(data);
+        }
+        //3.返回该对象
+        return basicResponse;
+
+
+
     }
 }

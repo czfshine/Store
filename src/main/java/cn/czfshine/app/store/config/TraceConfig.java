@@ -23,7 +23,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(HttpTraceProperties.class)
 @AutoConfigureBefore(HttpTraceAutoConfiguration.class)
 public class TraceConfig {
-
     @Bean
     @ConditionalOnMissingBean(HttpTraceRepository.class)
     public RemoteHttpTraceRepository traceRepository() {
