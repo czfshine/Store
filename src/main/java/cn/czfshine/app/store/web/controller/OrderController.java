@@ -4,6 +4,7 @@ import cn.czfshine.app.store.model.Customer;
 import cn.czfshine.app.store.model.OrderItem;
 import cn.czfshine.app.store.model.Orders;
 import cn.czfshine.app.store.model.Product;
+import cn.czfshine.app.store.model.dto.BasicResponse;
 import cn.czfshine.app.store.repository.CustomerRepository;
 import cn.czfshine.app.store.repository.OrderItemRepository;
 import cn.czfshine.app.store.repository.OrdersRepository;
@@ -11,6 +12,7 @@ import cn.czfshine.app.store.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,6 +79,17 @@ public class OrderController {
             log.warn(e.getMessage());
             return;
         }
+    }
 
+    @GetMapping("/api/getRandomOrder")
+    public BasicResponse getRandomOrder() {
+        Orders one = ordersRepository.getOne(0);
+        List<OrderItem> items = one.getItems();
+        for (OrderItem oi : items
+        ) {
+            oi.getProduct();
+        }
+
+        return null;
     }
 }
