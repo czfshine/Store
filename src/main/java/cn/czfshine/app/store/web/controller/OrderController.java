@@ -9,7 +9,6 @@ import cn.czfshine.app.store.repository.OrderItemRepository;
 import cn.czfshine.app.store.repository.OrdersRepository;
 import cn.czfshine.app.store.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,20 +20,33 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * 订单相关的控制器
+ */
 @RestController
 @Slf4j
-public class OderPostController {
+public class OrderController {
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-    @Autowired
-    private OrdersRepository ordersRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final OrdersRepository ordersRepository;
+    private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
 
-    @PostMapping("/api/oder/post")
+    public OrderController(OrderItemRepository orderItemRepository, OrdersRepository ordersRepository, ProductRepository productRepository, CustomerRepository customerRepository) {
+        this.orderItemRepository = orderItemRepository;
+        this.ordersRepository = ordersRepository;
+        this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
+    }
+
+    /**
+     * 上传一个新的订单
+     * todo json 自动生成对象或者hashmap，不要手动解析
+     * todo  提取逻辑成service
+     *
+     * @param json
+     */
+    @PostMapping("/api/order/post")
     public void recvPost(@RequestBody String json) {
         try {
             JsonParser jsonParser = JsonParserFactory.getJsonParser();
@@ -61,7 +73,7 @@ public class OderPostController {
             ordersRepository.save(orders);
             log.info(orders.toString());
         } catch (Exception e) {
-            System.out.println(e);
+            log.warn(e.getMessage());
             return;
         }
 
