@@ -78,13 +78,12 @@ function Scan() {
   })
   return map
 }
-const dirs = Scan();
-const pagename = process.argv[2]
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('../src/main/resources/'),
+  appBuild: resolveApp('../src/main/resources/static/'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   //appIndexJs: resolveModule(resolveApp, 'src/index'),
@@ -96,8 +95,7 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json')),
-  pagename
+  servedPath: getServedPath(resolveApp('package.json'))
 };
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
