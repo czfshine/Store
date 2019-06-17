@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+/* eslint-disable */
+import React,{Component} from "react";
 import classNames from "classnames";
 import {withStyles} from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -81,8 +81,9 @@ const styles = theme => ({
   }
 });
 
-class MiniDrawer extends React.Component {
+class MiniDrawer extends Component {
 
+  state:any;
 
   constructor(props){
     super(props);
@@ -182,11 +183,4 @@ class MiniDrawer extends React.Component {
     );
   }
 }
-
-MiniDrawer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-  title:PropTypes.object.isRequired
-};
-
-export default withStyles(styles, { withTheme: true })(MiniDrawer);
+export  default  withStyles(styles, { withTheme: true })(MiniDrawer);

@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+/* eslint-disable react/react-in-jsx-scope */
+
+import * as React from "react";
 import "uxcore/assets/iconfont.css";
 import "uxcore/assets/blue.css";
 import { Button } from "uxcore";
@@ -12,16 +14,25 @@ const mockData = {
   data: []
 };
 
-const rowdatamap={}
-class Demo extends Component {
+const rowdatamap={};
 
+export interface SaleDialogProps {
+  
+}
+
+class SaleDialog extends React.Component {
+  private allGan: any;
+  private storeid: number;
+  private jsxid: number;
+  private table: any;
+  state = {
+    data: mockData,
+    showOtherColumn: false,
+    total:0.0
+  };
   constructor(props) {
     super(props);
-    this.state = {
-      data: mockData,
-      showOtherColumn: false,
-      total:0.0,
-    };
+
     this.allGan = null;
     this.storeid=0;
     this.jsxid=0;
@@ -216,6 +227,7 @@ class Demo extends Component {
       footer: ({ data, column, from, rowGroupData = {} }) => {
         if (column.dataKey === "count") {
           return (
+              
             <div>
               <Icon usei name="biaoge1" /> 总计
             </div>
@@ -242,4 +254,4 @@ class Demo extends Component {
     );
   }
 }
-export default Demo;
+export default SaleDialog;

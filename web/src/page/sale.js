@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import "uxcore/assets/iconfont.css";
 import "uxcore/assets/orange.css";
-import MiniDrawer from "../components/MiniDrawer.js";
+import MiniDrawer from "../components/MiniDrawer.tsx";
 import client from "../data/client.js";
 import MaterialTable from "material-table";
 import "../icon.css";
@@ -14,7 +14,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
  * 销售页面组件
  */
 
-import SaleDialog from "../components/SaleDialog";
+import SaleDialog from "../components/SaleDialog.tsx";
 class Employee extends React.Component {
   render() {
     return (
