@@ -4,7 +4,7 @@ import {Button} from 'uxcore';
 import {Form} from 'uxcore';
 import {Dialog} from 'uxcore';
 import $ from 'jquery';
-import './product.css'
+import '../style/product.css'
 /*
  * 讲解：object-assign 是一个非常实用的用于对象拷贝和扩展的函数
  * 详细说明见 https://www.npmjs.com/package/object-assign

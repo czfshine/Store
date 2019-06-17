@@ -12,22 +12,23 @@ import AllTable from "../components/AllTable.tsx"
 /**
  * 销售页面组件
  */
-function Sale (){
+function Check() {
     return (
         <div className="App">
             <MiniDrawer
                 lists={[
-                    ["售货窗口", <InboxIcon />, "/sale/oder"],
-                    ["历史订单", <MailIcon />, "/sale/all"],
-                    ["统计信息", <MailIcon />, "/sale/todo"],//todo
+                    ["清点", <MailIcon />, "/check/do"],
+                    ["所有库存", <InboxIcon />, "/check/all"],
+                    ["清点历史", <MailIcon />, "/check/history"],
                 ]}
-                title="售货端">
+                title="清点端">
 
-                <Route exact path="/sale/" component={AllTable} />
-                <Route path="/sale/oder" component={SaleDialog} />
+                <Route exact path="/check/" component={AllTable} />
+                <Route path="/check/all" component={SaleDialog} />
+                <Route path="/check/history" component={SaleDialog} />
+                <Route path="/check/do" component={SaleDialog} />
             </MiniDrawer>
         </div>
     );
 }
-
-export default Sale;
+export default Check;

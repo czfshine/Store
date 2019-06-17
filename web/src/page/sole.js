@@ -12,7 +12,7 @@ import AllTable from "../components/AllTable.tsx"
 /**
  * 销售页面组件
  */
-function Sale (){
+function Sole(){
     return (
         <div className="App">
             <MiniDrawer
@@ -21,7 +21,7 @@ function Sale (){
                     ["历史订单", <MailIcon />, "/sale/all"],
                     ["统计信息", <MailIcon />, "/sale/todo"],//todo
                 ]}
-                title="售货端">
+                title="进货端">
 
                 <Route exact path="/sale/" component={AllTable} />
                 <Route path="/sale/oder" component={SaleDialog} />
@@ -30,4 +30,4 @@ function Sale (){
     );
 }
 
-export default Sale;
+export default Sole;

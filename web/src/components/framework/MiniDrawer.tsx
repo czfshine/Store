@@ -1,5 +1,5 @@
-/* eslint-disable */
-import React,{Component} from "react";
+import {Component} from "react";
+import * as React  from "react";
 import classNames from "classnames";
 import {withStyles} from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -81,9 +81,13 @@ const styles = theme => ({
   }
 });
 
+/**
+ * 界面主框架
+ */
 class MiniDrawer extends Component {
 
   state:any;
+  props:any;
 
   constructor(props){
     super(props);
@@ -183,4 +187,5 @@ class MiniDrawer extends Component {
     );
   }
 }
-export  default  withStyles(styles, { withTheme: true })(MiniDrawer);
+
+export  default  withStyles(styles as any, { withTheme: true })(MiniDrawer);
