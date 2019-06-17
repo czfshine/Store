@@ -3943,11 +3943,6 @@ escodegen@^1.11.0, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-google@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.npm.taobao.org/eslint-config-google/download/eslint-config-google-0.13.0.tgz#e277d16d2cb25c1ffd3fd13fb0035ad7421382fe"
-  integrity sha1-4nfRbSyyXB/9P9E/sANa10ITgv4=
-
 eslint-config-react-app@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npm.taobao.org/eslint-config-react-app/download/eslint-config-react-app-4.0.1.tgz#23fd0fd7ea89442ef1e733f66a7207674b23c8db"
