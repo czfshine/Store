@@ -171,7 +171,8 @@ function build(previousFileSizes) {
               'Most CI servers set it automatically.\n'
           )
         );
-        return reject(new Error(messages.warnings.join('\n\n')));
+        //去掉ci的
+        //return reject(new Error(messages.warnings.join('\n\n')));
       }
 
       return resolve({
