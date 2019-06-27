@@ -4,6 +4,8 @@
 
  //import getModelLink from '../links.js'
  class Product {
+    public columns: ({ dataKey: string; hidden: boolean; width: number; title: string } | { dataKey: string; ordered: boolean; width: number; title: string } | { dataKey: string; title: string })[];
+    public link: string;
     constructor() {
         //这个是显示到table需要的信息
         this.columns = [
@@ -15,7 +17,7 @@
         { dataKey: 'name', title: '商品名', width: 150, ordered: true },
         { dataKey: 'size', title: '规格' }];
         //this.link=getModelLink("products");
-        this.link="/data/products"
+        this.link="/data/products?"
       }
     
  }

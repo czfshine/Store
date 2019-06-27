@@ -8,7 +8,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import { Route} from "react-router-dom";
 import SaleDialog from "../components/SaleDialog.tsx";
 import AllTable from "../components/AllTable.tsx"
-
+import HistoryTable from "../components/HistoryTable.tsx"
 /**
  * 销售页面组件
  */
@@ -25,6 +25,7 @@ function Sale (){
 
                 <Route exact path="/sale/" component={AllTable} />
                 <Route path="/sale/oder" component={SaleDialog} />
+                <Route path="/sale/all" component={HistoryTable} />
             </MiniDrawer>
         </div>
     );

@@ -45,7 +45,7 @@ class SaleDialog extends React.Component {
   getTableValues() {
     var data = this.table.getData();
     console.log(data);
-    fetch('/api/oder/post', {
+    fetch('/api/order/post', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
