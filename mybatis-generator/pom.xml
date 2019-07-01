@@ -2,14 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>store</artifactId>
-        <groupId>cn.czfshine.app</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
+
     <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.czfshine</groupId>
 
     <artifactId>mybatis-generator</artifactId>
+    <version>1.0.0</version>
     <dependencies>
         <!-- 用于生成日志 -->
      <dependency>
@@ -21,7 +19,7 @@
      <dependency>
          <groupId>mysql</groupId>
          <artifactId>mysql-connector-java</artifactId>
-         <version>5.1.38</version>
+         <version>8.0.15</version>
      </dependency>
          <dependency>
          <groupId>org.mybatis</groupId>
@@ -35,7 +33,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName></finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -62,7 +60,7 @@
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.38</version>
+                        <version>8.0.15</version>
                     </dependency>
                 </dependencies>
             </plugin>
