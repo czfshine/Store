@@ -18,8 +18,8 @@ public class Product {
     private @Id @GeneratedValue int proid;
 
 
-    private String name;
-    private String size;
+    private String name;//名称
+    private String size;//规格
 
     private int gan; //商品唯一识别码
     @ManyToOne

@@ -22,6 +22,7 @@ public class Sale {
     private int id;
     private BigDecimal pricing;//价格
     @ManyToOne
+    @JoinColumn(name="proid")
     private Product product;
     @ManyToOne
     private Store store;

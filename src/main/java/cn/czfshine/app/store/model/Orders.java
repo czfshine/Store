@@ -1,5 +1,6 @@
 package cn.czfshine.app.store.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,27 +12,29 @@ import java.util.List;
  */
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Orders {
-    private @Id
+    @Id
     @GeneratedValue
-    int id;
+    private int id;
 
-    @OneToOne
+    @ManyToOne
     private Customer customer;
     private Date ordertime;//下单时间
-    //提供有参构造方法 (id属性排除在外)
-    @OneToMany
+    private Boolean del;
+
+    @ManyToMany
     private List<OrderItem> items;
+
 
     public Orders( Customer customer, Date ordertime, List<OrderItem> items) {
         this.customer = customer;
         this.ordertime = ordertime;
         this.items = items;
+        del=false;
     }
 
-    /*将访问修饰符由private改为public*/
-//    修改原因:OrderController类的ordersRepository.getOne(133);执行出错,查看控制台的错误信息
-//    发现它说的是没有默认的无参构造方法,于是修改,修改后通过.
     public Orders() {
+        del=false;
     }
 }

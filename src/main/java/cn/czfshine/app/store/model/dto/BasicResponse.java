@@ -1,5 +1,6 @@
 package cn.czfshine.app.store.model.dto;
 
+import cn.czfshine.app.store.model.constant.StatusCode;
 import lombok.Data;
 
 /**
@@ -22,4 +23,8 @@ public class BasicResponse {
      */
     private Object data;
 
+    public BasicResponse() {
+        code = StatusCode.SUCCESS.getCode();
+        message = StatusCode.SUCCESS.getMsg();
+    }
 }

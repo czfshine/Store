@@ -26,11 +26,11 @@ class GuttersGrid extends React.Component {
     };
 
     handleChange = key => (event, value) => {
-        this.setState({ [key]: value });
+        this.setState({[key]: value});
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <Grid container className={classes.root} spacing={14}>
                 <Grid item xs={12}>
@@ -42,17 +42,17 @@ class GuttersGrid extends React.Component {
                     >
                         <Grid key="1" item>
                             <Paper className={classes.paper}>
-                                <SimpleCard to="sale" name="售货员" datas="我是一个售货员" />
+                                <SimpleCard to="sale" name="售货员" datas="我是一个售货员"/>
                             </Paper>
                         </Grid>
                         <Grid key="2" item>
                             <Paper className={classes.paper}>
-                                <SimpleCard to="sole" name="进货员" datas="我是一个进货员" />
+                                <SimpleCard to="sole" name="进货员" datas="我是一个进货员"/>
                             </Paper>
                         </Grid>
                         <Grid key="2" item>
                             <Paper className={classes.paper}>
-                                <SimpleCard to="check" name="清点员" datas="我是一个清点员" />
+                                <SimpleCard to="check" name="清点员" datas="我是一个清点员"/>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -66,4 +66,4 @@ GuttersGrid.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export  default withStyles(styles)(GuttersGrid);
+export default withStyles(styles)(GuttersGrid);

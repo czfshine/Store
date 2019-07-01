@@ -20,13 +20,14 @@ function Check() {
                     ["清点", <MailIcon />, "/check/do"],
                     ["所有库存", <InboxIcon />, "/check/all"],
                     ["清点历史", <MailIcon />, "/check/history"],
+                    ["统计信息-商品", <MailIcon />, "/check/stats/product"],//todo
+                    ["统计信息-销售", <MailIcon />, "/check/stats/sale"],//todo
+                    ["统计信息-库存", <MailIcon />, "/check/stats/sold"],//todo
+                    ["统计信息-类型", <MailIcon />, "/check/stats/type"],//todo
                 ]}
                 title="清点端">
 
                 <Route exact path="/check/" component={AllTable} />
-                <Route path="/check/all" component={SaleDialog} />
-                <Route path="/check/history" component={SaleDialog} />
-                <Route path="/check/do" component={SaleDialog} />
             </MiniDrawer>
         </div>
     );

@@ -17,14 +17,16 @@ function Sole(){
         <div className="App">
             <MiniDrawer
                 lists={[
-                    ["售货窗口", <InboxIcon />, "/sale/oder"],
-                    ["历史订单", <MailIcon />, "/sale/all"],
-                    ["统计信息", <MailIcon />, "/sale/todo"],//todo
+                    ["进货窗口", <InboxIcon />, "/sold/oder"],
+                    ["历史记录", <MailIcon />, "/sold/all"],
+                    ["统计信息-商品", <MailIcon />, "/sold/stats/product"],//todo
+                    ["统计信息-销售", <MailIcon />, "/sold/stats/sale"],//todo
+                    ["统计信息-库存", <MailIcon />, "/sold/stats/sold"],//todo
+                    ["统计信息-类型", <MailIcon />, "/sold/stats/type"],//todo
                 ]}
                 title="进货端">
 
-                <Route exact path="/sale/" component={AllTable} />
-                <Route path="/sale/oder" component={SaleDialog} />
+                <Route exact path="/sold/" component={AllTable} />
             </MiniDrawer>
         </div>
     );

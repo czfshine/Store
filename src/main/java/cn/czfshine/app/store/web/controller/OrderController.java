@@ -6,17 +6,18 @@ import cn.czfshine.app.store.model.Orders;
 import cn.czfshine.app.store.model.Product;
 import cn.czfshine.app.store.model.constant.StatusCode;
 import cn.czfshine.app.store.model.dto.BasicResponse;
+import cn.czfshine.app.store.model.dto.OrderInfoDO;
+import cn.czfshine.app.store.model.dto.ReturnGoodsInfo;
 import cn.czfshine.app.store.repository.CustomerRepository;
 import cn.czfshine.app.store.repository.OrderItemRepository;
 import cn.czfshine.app.store.repository.OrdersRepository;
 import cn.czfshine.app.store.repository.ProductRepository;
+import cn.czfshine.app.store.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -44,7 +45,6 @@ public class OrderController {
      * 上传一个新的订单
      * todo json 自动生成对象或者hashmap，不要手动解析
      * todo  提取逻辑成service
-     *
      * @param json
      */
     @PostMapping("/api/order/post")
@@ -90,15 +90,10 @@ public class OrderController {
      */
     @GetMapping("/api/getRandomOrder")
     public BasicResponse getRandomOrder() {
-        /*本来应该将所有订单的id放在一个集合中,通过随机取集合中的一个元素,来实现取随机订单的功能*/
-        /*但这里为了方便,先将订单id写死*/
-        //目前数据库中可用的订单id只有133和139这两个
         //new一个BasicResponse类对象,将它的三个属性封装完毕,并返回
         //由于是@RestController,会自动将Java实体转为Json对象
-        //1.new一个BasicResponse类对象
         BasicResponse basicResponse = new BasicResponse();
-        //2.完成code message data三个属性的封装
-        //模拟取得一个订单[该订单的id写死为139]
+        //模拟取得一个订单
         Orders randomOrder = ordersRepository.getOne(139);
         /*该订单中的具体订单项*/
         List<OrderItem> items = randomOrder.getItems();
@@ -108,62 +103,55 @@ public class OrderController {
             basicResponse.setMessage(StatusCode.ORDERITEM_EMPTY_ERROR.getMsg());
             basicResponse.setData(null);
         }else{
-            //订单项不为空
-            //订单中有订单项,订单项里有具体的商品
-            //那么传回的data是什么?
-/*
-            "orderId":123,
-            "products":[
-            			{
-            				"productsId":"123456",
-            				"name":"可乐",
-            				"price":"12.",
-            				"count":"2"
-            			},
-            			{
-            				"productsId":"123457",
-            				"name":"可乐",
-            				"price":"12.7",
-            				"count":"2"
-            			},
-            			{
-            				"productsId":"123458",
-            				"name":"可乐",
-            				"price":"12.6",
-            				"count":"2"
-            			}]
-*/
+
             //返回的data是Map<String,Object>
             //第一个key-value对 : "orderId" - orderId的数值
             //第二个key-value对 : "products" - List<Map<String,String>
             Map<String,Object> data = new HashMap<>();
-            //将第一个key-value对put进data中
             data.put("orderId",randomOrder.getId());
             List<Map<String,String>> list = new ArrayList<>();
             //遍历订单项
             for(OrderItem orderItem : items){
                 Map<String,String> productInfoMap = new HashMap<>();
-                //value部分+""是因为int不能直接toString()
-                productInfoMap.put("productsId",orderItem.getProduct().getProid()+"");
-                productInfoMap.put("name",orderItem.getProduct().getName()+"");
-                productInfoMap.put("price",orderItem.getPricing()+"");
-                productInfoMap.put("count",orderItem.getCount()+"");
-                //将productInfoMap添加进valueOfMap2中
+                productInfoMap.put("productsId", String.valueOf(orderItem.getProduct().getProid()));
+                productInfoMap.put("name",orderItem.getProduct().getName());
+                productInfoMap.put("price", String.valueOf(orderItem.getPricing()));
+                productInfoMap.put("count", String.valueOf(orderItem.getCount()));
                 list.add(productInfoMap);
             }
-            //将第二个key-value对put进data中
             data.put("products",list);
 
-            //至此,订单项不为空的时候,data封装完毕
             //basicResponse赋值3个属性,并返回
             basicResponse.setCode(StatusCode.SUCCESS.getCode());
             basicResponse.setMessage(StatusCode.SUCCESS.getMsg());
             basicResponse.setData(data);
         }
-        //3.返回该对象
         return basicResponse;
+    }
+    @Autowired
+    private OrderService orderService;
 
+    @GetMapping("/api/order/getall")
+    public BasicResponse getAllOrder(){
+        BasicResponse basicResponse = new BasicResponse();
+        List<OrderInfoDO> allOrder = orderService.getAllOrder();
+        basicResponse.setData(allOrder);
+        return basicResponse;
+    }
 
-
+    @GetMapping("/api/order/getOne/{orderId}")
+    public BasicResponse getOrderById(@PathVariable String orderId){
+        BasicResponse basicResponse = new BasicResponse();
+        basicResponse.setData(orderService.getOrderById(Integer.valueOf(orderId)));
+        return basicResponse;
+    }
+    /**
+     * 退货
+     */
+    @PostMapping("/api/order/return")
+    public BasicResponse returnGoods(@RequestBody ReturnGoodsInfo returnGoodsInfo){
+        log.warn(String.valueOf(returnGoodsInfo));
+        orderService.returnProducts(returnGoodsInfo.getOrderId(),returnGoodsInfo.getProductIds());
+        return new BasicResponse();
     }
 }

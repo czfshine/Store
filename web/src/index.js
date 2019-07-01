@@ -5,9 +5,12 @@ import App from "./page/App";
 import Sale from "./page/sale";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Sole from "./page/sole";
+import Check from "./page/check";
 
 /**
  * 项目入口点
+ * typescript
  */
 
 ReactDOM.render( //todo:另外两个页面
@@ -16,8 +19,8 @@ ReactDOM.render( //todo:另外两个页面
         {/*根据url的内容路由组件*/}
       <Route path="/" exact component={App} />
       <Route path="/sale/" component={Sale} />
-      <Route path="/sole/" component={App} />
-      <Route path="/check/" component={App} />
+      <Route path="/sole/" component={Sole} />
+      <Route path="/check/" component={Check} />
     </div>
   </Router>,
   document.getElementById("root")

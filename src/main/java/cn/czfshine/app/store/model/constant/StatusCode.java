@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
  * 添加lombok三个注解
  */
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public enum StatusCode {
 //    原来的写法
 //    success("0000"),
@@ -41,4 +39,9 @@ public enum StatusCode {
     ORDERITEM_EMPTY_ERROR(5001,"订单项为空错误");
     private int code;
     private String msg;
+
+    StatusCode(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
 }

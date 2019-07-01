@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Person from "@material-ui/core/SvgIcon/SvgIcon";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import  * as PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
 import * as React from "react";
 
@@ -29,12 +29,12 @@ const cardstyles = {
 
 //卡片组件
 function SimpleCard(props) {
-    const { classes } = props;
+    const {classes} = props;
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography variant="h5" component="h2">
-                    <Person /> {props.name}
+                    <Person/> {props.name}
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
                     免登录
@@ -54,6 +54,7 @@ function SimpleCard(props) {
         </Card>
     );
 }
+
 SimpleCard.propTypes = {
     classes: PropTypes.object.isRequired
 };
