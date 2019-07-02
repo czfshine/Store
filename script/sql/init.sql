@@ -77,3 +77,12 @@ INSERT INTO `storev2`.`sold` (`id`, `count`, `pricing`, `product_id`, `store_id`
 INSERT INTO `storev2`.`sold` (`id`, `count`, `pricing`, `product_id`, `store_id`, `vendor_id`) VALUES ('9', '10', '0.5', '9', '1', '1');
 INSERT INTO `storev2`.`sold` (`id`, `count`, `pricing`, `product_id`, `store_id`, `vendor_id`) VALUES ('10', '20', '10', '10', '1', '2');
 INSERT INTO `storev2`.`sold` (`id`, `count`, `pricing`, `product_id`, `store_id`, `vendor_id`) VALUES ('11', '30', '21', '11', '1', '3');
+
+INSERT INTO `storev2`.`order_item` (`id`, `count`, `pricing`, `product_id`) VALUES ('1', '1', '20', '2');
+INSERT INTO `storev2`.`order_item` (`id`, `count`, `pricing`, `product_id`) VALUES ('2', '2', '10', '3');
+
+INSERT INTO `storev2`.`orders` (`id`, `del`, `ordertime`, `store_id`) VALUES ('1', b'0', NULL, b'1');
+
+INSERT INTO `storev2`.`orders_items` (`orders_id`, `items_id`) VALUES ('1', '1');
+INSERT INTO `storev2`.`orders_items` (`orders_id`, `items_id`) VALUES ('1', '2');
+
