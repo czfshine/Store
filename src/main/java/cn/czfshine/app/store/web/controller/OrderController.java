@@ -1,10 +1,10 @@
 package cn.czfshine.app.store.web.controller;
 
-
 import cn.czfshine.app.store.model.constant.StatusCode;
 import cn.czfshine.app.store.model.dto.BasicResponse;
 import cn.czfshine.app.store.model.dto.OrderInfoDO;
 import cn.czfshine.app.store.model.dto.ReturnGoodsInfo;
+import cn.czfshine.app.store.model.pojo.Orders;
 import cn.czfshine.app.store.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +125,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
     @GetMapping("/api/order/getall")
     public BasicResponse getAllOrder(){
         BasicResponse basicResponse = new BasicResponse();
@@ -133,13 +134,21 @@ public class OrderController {
         return basicResponse;
     }
 
-    @GetMapping("/api/order/getOne/{orderId}")
-    public BasicResponse getOrderById(@PathVariable String orderId){
+
+//    @GetMapping("/api/order/getOne/{orderId}")
+//    public BasicResponse getOrderById(@PathVariable String orderId){
 //        BasicResponse basicResponse = new BasicResponse();
 //        basicResponse.setData(orderService.getOrderById(Integer.valueOf(orderId)));
 //        return basicResponse;
-        return null;
+//    }
+
+    // modified
+    // 参数的类型由String改为了Integer,因为orders表设计的时候该字段是int类型的
+    @GetMapping("/api/order/getOne/{id}")
+    public Orders getOrderById(@PathVariable("id") Integer id){
+        return orderService.getOrderById(id);
     }
+
     /**
      * 退货
      */

@@ -2,6 +2,7 @@ package cn.czfshine.app.store.web.controller;
 
 import cn.czfshine.app.store.exception.ApiResourceNotFoundException;
 import cn.czfshine.app.store.model.dto.AllGan;
+import cn.czfshine.app.store.model.pojo.Sale;
 import cn.czfshine.app.store.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import java.util.List;
 @RestController
 @Slf4j
 public class ProductApiController {
-
 
     @Autowired
     private ProductService productService;
@@ -48,15 +48,9 @@ public class ProductApiController {
     }
 
 
-    /**取对应商店的对应商品的销售信息
-     * @param proId
-     * @param storeId
-     * @return
-     * @throws ApiResourceNotFoundException
-     */
-    @GetMapping("/api/sale")
-    public void getSaleInfo(@RequestParam("productid") int proId,
-                            @RequestParam("storeid") int storeId) throws ApiResourceNotFoundException {
+//    @GetMapping("/api/sale")
+//    public void getSaleInfo(@RequestParam("productid") int proId,
+//                            @RequestParam("storeid") int storeId) throws ApiResourceNotFoundException {
 //        Optional<Store> byId = storeRepository.findById(storeId);
 //        if(!byId.isPresent()){
 //
@@ -72,6 +66,21 @@ public class ProductApiController {
 //            throw new ApiResourceNotFoundException("商店没有销售该商品");
 //        }
 //        return byProductAndStore;
+//    }
+
+    /**
+     * 根据productId和storeId查得相应的销售信息
+     * @param productId
+     * @param storeId
+     * @return
+     * @throws ApiResourceNotFoundException
+     */
+    @GetMapping("/api/sale")
+    public Sale getSaleInfo(@RequestParam("productId") Integer productId,
+                            @RequestParam("storeId") Integer storeId) throws ApiResourceNotFoundException {
+        return productService.getSaleInfo(productId,storeId);
     }
+
+
 }
 
