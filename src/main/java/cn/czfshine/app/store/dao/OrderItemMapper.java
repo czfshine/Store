@@ -1,8 +1,10 @@
 package cn.czfshine.app.store.dao;
 
-import cn.czfshine.app.store.pojo.OrderItem;
-import cn.czfshine.app.store.pojo.OrderItemExample;
+
 import java.util.List;
+
+import cn.czfshine.app.store.model.pojo.OrderItem;
+import cn.czfshine.app.store.model.pojo.OrderItemExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderItemMapper {

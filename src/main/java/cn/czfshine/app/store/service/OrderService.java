@@ -1,7 +1,8 @@
 package cn.czfshine.app.store.service;
 
-import cn.czfshine.app.store.model.Orders;
+
 import cn.czfshine.app.store.model.dto.OrderInfoDO;
+import cn.czfshine.app.store.model.pojo.Orders;
 
 import java.util.List;
 

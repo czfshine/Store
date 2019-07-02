@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.czfshine.app.store.dao.ProductMapper">
-  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.pojo.Product">
+  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.model.pojo.Product">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="gan" jdbcType="INTEGER" property="gan" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, gan, name, size, instid
   </sql>
-  <select id="selectByExample" parameterType="cn.czfshine.app.store.pojo.ProductExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.czfshine.app.store.model.pojo.ProductExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -84,19 +84,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.pojo.ProductExample">
+  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.model.pojo.ProductExample">
     delete from product
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.czfshine.app.store.pojo.Product">
+  <insert id="insert" parameterType="cn.czfshine.app.store.model.pojo.Product">
     insert into product (id, gan, name, 
       size, instid)
     values (#{id,jdbcType=INTEGER}, #{gan,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{size,jdbcType=VARCHAR}, #{instid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.czfshine.app.store.pojo.Product">
+  <insert id="insertSelective" parameterType="cn.czfshine.app.store.model.pojo.Product">
     insert into product
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -133,7 +133,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.czfshine.app.store.pojo.ProductExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="cn.czfshine.app.store.model.pojo.ProductExample" resultType="java.lang.Integer">
     select count(*) from product
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -173,7 +173,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.pojo.Product">
+  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.model.pojo.Product">
     <result column="proid" jdbcType="INTEGER" property="proid" />
     <result column="gan" jdbcType="INTEGER" property="gan" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -241,7 +241,7 @@
   <sql id="Base_Column_List">
     proid, gan, name, size, id
   </sql>
-  <select id="selectByExample" parameterType="cn.czfshine.app.store.pojo.ProductExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.czfshine.app.store.model.pojo.ProductExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -256,19 +256,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.pojo.ProductExample">
+  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.model.pojo.ProductExample">
     delete from product
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.czfshine.app.store.pojo.Product">
+  <insert id="insert" parameterType="cn.czfshine.app.store.model.pojo.Product">
     insert into product (proid, gan, name, 
       size, id)
     values (#{proid,jdbcType=INTEGER}, #{gan,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{size,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.czfshine.app.store.pojo.Product">
+  <insert id="insertSelective" parameterType="cn.czfshine.app.store.model.pojo.Product">
     insert into product
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="proid != null">
@@ -305,7 +305,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.czfshine.app.store.pojo.ProductExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="cn.czfshine.app.store.model.pojo.ProductExample" resultType="java.lang.Integer">
     select count(*) from product
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

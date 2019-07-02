@@ -1,7 +1,7 @@
 package cn.czfshine.app.store.dao;
 
-import cn.czfshine.app.store.pojo.Type;
-import cn.czfshine.app.store.pojo.TypeExample;
+import cn.czfshine.app.store.model.pojo.Type;
+import cn.czfshine.app.store.model.pojo.TypeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

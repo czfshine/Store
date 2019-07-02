@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.czfshine.app.store.dao.OrderItemMapper">
-  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.pojo.OrderItem">
+  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.model.pojo.OrderItem">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="count" jdbcType="DOUBLE" property="count" />
     <result column="pricing" jdbcType="DECIMAL" property="pricing" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     id, count, pricing, product_id
   </sql>
-  <select id="selectByExample" parameterType="cn.czfshine.app.store.pojo.OrderItemExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.czfshine.app.store.model.pojo.OrderItemExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -83,19 +83,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.pojo.OrderItemExample">
+  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.model.pojo.OrderItemExample">
     delete from order_item
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.czfshine.app.store.pojo.OrderItem">
+  <insert id="insert" parameterType="cn.czfshine.app.store.model.pojo.OrderItem">
     insert into order_item (id, count, pricing, 
       product_id)
     values (#{id,jdbcType=INTEGER}, #{count,jdbcType=DOUBLE}, #{pricing,jdbcType=DECIMAL}, 
       #{productId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.czfshine.app.store.pojo.OrderItem">
+  <insert id="insertSelective" parameterType="cn.czfshine.app.store.model.pojo.OrderItem">
     insert into order_item
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -126,7 +126,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.czfshine.app.store.pojo.OrderItemExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="cn.czfshine.app.store.model.pojo.OrderItemExample" resultType="java.lang.Integer">
     select count(*) from order_item
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -162,7 +162,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.pojo.OrderItem">
+  <resultMap id="BaseResultMap" type="cn.czfshine.app.store.model.pojo.OrderItem">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="count" jdbcType="DOUBLE" property="count" />
     <result column="pricing" jdbcType="DECIMAL" property="pricing" />
@@ -229,7 +229,7 @@
   <sql id="Base_Column_List">
     id, count, pricing, product_proid
   </sql>
-  <select id="selectByExample" parameterType="cn.czfshine.app.store.pojo.OrderItemExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.czfshine.app.store.model.pojo.OrderItemExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -244,19 +244,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.pojo.OrderItemExample">
+  <delete id="deleteByExample" parameterType="cn.czfshine.app.store.model.pojo.OrderItemExample">
     delete from order_item
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.czfshine.app.store.pojo.OrderItem">
+  <insert id="insert" parameterType="cn.czfshine.app.store.model.pojo.OrderItem">
     insert into order_item (id, count, pricing, 
       product_proid)
     values (#{id,jdbcType=INTEGER}, #{count,jdbcType=DOUBLE}, #{pricing,jdbcType=DECIMAL}, 
       #{productProid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.czfshine.app.store.pojo.OrderItem">
+  <insert id="insertSelective" parameterType="cn.czfshine.app.store.model.pojo.OrderItem">
     insert into order_item
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -287,7 +287,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.czfshine.app.store.pojo.OrderItemExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="cn.czfshine.app.store.model.pojo.OrderItemExample" resultType="java.lang.Integer">
     select count(*) from order_item
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

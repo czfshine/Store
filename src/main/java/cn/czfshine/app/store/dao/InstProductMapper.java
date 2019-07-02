@@ -1,9 +1,12 @@
 package cn.czfshine.app.store.dao;
 
-import cn.czfshine.app.store.pojo.InstProduct;
-import cn.czfshine.app.store.pojo.InstProductExample;
-import java.util.List;
+
+
+import cn.czfshine.app.store.model.pojo.InstProduct;
+import cn.czfshine.app.store.model.pojo.InstProductExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface InstProductMapper {
     int countByExample(InstProductExample example);
