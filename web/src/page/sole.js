@@ -5,9 +5,11 @@ import MiniDrawer from "../components/framework/MiniDrawer.tsx";
 import "../style/icon.css";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { Route} from "react-router-dom";
-import SaleDialog from "../components/SaleDialog.tsx";
-import AllTable from "../components/AllTable.tsx"
+import {Route} from "react-router";
+import ImportTable from "../components/ImportTable.tsx";
+import HistoryImportTable from "../components/HistoryImportTable.tsx";
+import VendorTable from "../components/VendorTable.tsx";
+import PushTable from "../components/PushTable.tsx";
 
 /**
  * 销售页面组件
@@ -17,16 +19,18 @@ function Sole(){
         <div className="App">
             <MiniDrawer
                 lists={[
-                    ["进货窗口", <InboxIcon />, "/sold/oder"],
-                    ["历史记录", <MailIcon />, "/sold/all"],
-                    ["统计信息-商品", <MailIcon />, "/sold/stats/product"],//todo
-                    ["统计信息-销售", <MailIcon />, "/sold/stats/sale"],//todo
-                    ["统计信息-库存", <MailIcon />, "/sold/stats/sold"],//todo
-                    ["统计信息-类型", <MailIcon />, "/sold/stats/type"],//todo
+                    ["进货单", <InboxIcon />, "/sold/import"],
+                    ["查看历史进货信息", <MailIcon />, "/sold/historyImport"],
+                    ["查看供应商", <MailIcon />, "/sold/vendor"],//todo
+                    ["上货", <MailIcon />, "/sold/pushGoods" ]
                 ]}
                 title="进货端">
 
-                <Route exact path="/sold/" component={AllTable} />
+                <Route exact path="/sold/" component={ImportTable} />
+                <Route exact path="/sold/import" component={ImportTable} />
+                <Route exact path="/sold/historyImport" component={HistoryImportTable} />
+                <Route exact path="/sold/vendor" component={VendorTable} />
+                <Route exact path="/sold/pushGoods" component={PushTable} />
             </MiniDrawer>
         </div>
     );

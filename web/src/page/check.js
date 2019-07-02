@@ -8,6 +8,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import { Route} from "react-router-dom";
 import SaleDialog from "../components/SaleDialog.tsx";
 import AllTable from "../components/AllTable.tsx"
+import CheckTable from "../components/CheckTable.tsx";
 
 /**
  * 销售页面组件
@@ -18,16 +19,12 @@ function Check() {
             <MiniDrawer
                 lists={[
                     ["清点", <MailIcon />, "/check/do"],
-                    ["所有库存", <InboxIcon />, "/check/all"],
-                    ["清点历史", <MailIcon />, "/check/history"],
-                    ["统计信息-商品", <MailIcon />, "/check/stats/product"],//todo
-                    ["统计信息-销售", <MailIcon />, "/check/stats/sale"],//todo
-                    ["统计信息-库存", <MailIcon />, "/check/stats/sold"],//todo
-                    ["统计信息-类型", <MailIcon />, "/check/stats/type"],//todo
+                    ["所有库存", <InboxIcon />, "/check/all"]
                 ]}
                 title="清点端">
-
-                <Route exact path="/check/" component={AllTable} />
+                <Route exact path="/check/" component={CheckTable} />
+                <Route exact path="/check/do" component={CheckTable} />
+                <Route exact path="/check/all" component={AllTable} />
             </MiniDrawer>
         </div>
     );
