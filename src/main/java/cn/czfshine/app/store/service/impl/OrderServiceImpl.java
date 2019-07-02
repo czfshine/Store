@@ -63,8 +63,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Orders getOrderById(Integer orderId) {
-        return null;
+    public Orders getOrderById(Integer id) {
+        return ordersServiceMapper.getOrderById(id);
     }
 
     @Override

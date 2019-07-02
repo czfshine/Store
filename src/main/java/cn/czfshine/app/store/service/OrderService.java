@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface OrderService {
     List<OrderInfoDO> getAllOrder();
-    Orders getOrderById(Integer orderId);
+    Orders getOrderById(Integer id);
     void returnProducts(Integer orderId, List<Integer> productIds);
 }

@@ -1,6 +1,7 @@
 package cn.czfshine.app.store.service.impl;
 
 import cn.czfshine.app.store.dao.ProductServiceMapper;
+import cn.czfshine.app.store.model.pojo.Sale;
 import cn.czfshine.app.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public HashMap<String, Object> getProductByGan(Integer gan) {
         return productServiceMapper.getProductByGan(gan);
+    }
+
+    @Override
+    public Sale getSaleInfo(Integer productId, Integer storeId) {
+        return productServiceMapper.getSaleInfo(productId,storeId);
     }
 }
