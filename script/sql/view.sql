@@ -1,0 +1,1 @@
+CREATE VIEW store_product AS (select pricing,storename,product_id,gan,`name`,size from ( sale left join store on sale.store_id = store.id  ) left join product on sale.product_id = product.id )
