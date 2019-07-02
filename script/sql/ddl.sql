@@ -43,6 +43,7 @@ CREATE TABLE `store` (
   `id` int(11) NOT NULL,
   `local` varchar(255) DEFAULT NULL,
   `storename` varchar(255) DEFAULT NULL,
+  `turnover` decimal(19,2) default 0,
   PRIMARY KEY (`id`)
 ) ;
 
@@ -65,7 +66,7 @@ CREATE TABLE `storage` (
   `id` int(11) NOT NULL,
   `count` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `store_id` int(11) NOT NULL,
+  `store_id` int(11) default 1,
   PRIMARY KEY (`id`),
   foreign key (`product_id` ) references `product`(`id`),
   foreign key (`store_id` ) references `store`(`id`)
@@ -98,8 +99,11 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `del` bit(1) DEFAULT NULL,
   `ordertime` datetime DEFAULT NULL,
+  
+  `store_id` int(11) default null, 
   -- `customer_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  foreign key (`store_id` ) references `store`(`id`)
 ) ;
 
 
@@ -108,7 +112,7 @@ DROP TABLE  if exists `orders_items`;
 CREATE TABLE `orders_items` (
   `orders_id` int(11) NOT NULL,
   `items_id` int(11) NOT NULL,
-
+	primary key (`orders_id`,`items_id`),
 foreign key (`orders_id` ) references `orders`(`id`),
 foreign key (`items_id` ) references `order_item`(`id`)
 ) ;
