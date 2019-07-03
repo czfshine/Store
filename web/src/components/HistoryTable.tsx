@@ -246,7 +246,7 @@ class HistoryTable extends React.Component {
                             } catch {}
                         })
                     }
-                    title="所有订单信息"
+                    title="所有订单历史信息"
                 />
             </div>
 

@@ -7,24 +7,12 @@ class HistoryImportTable extends  React.Component{
             <MaterialTable
                 columns={[
                     {
-                        title: "商品名",
+                        title: "供应商名字",
                         field: "name"
                     },
                     {
-                        title: "规格",
-                        field: "size"
-                    },
-                    {
-                        title: "数量",
-                        field: "count"
-                    },
-                    {
-                        title: "供应商",
-                        field: "vendorName"
-                    },
-                    {
-                        title: "进货价",
-                        field: "pricing"
+                        title: "供应商位置",
+                        field: "location"
                     }
                 ]}
                 data={query =>
@@ -46,7 +34,7 @@ class HistoryImportTable extends  React.Component{
                         // } catch {}
                     })
                 }
-                title="历史进货信息"
+                title="供应商列表"
 
             />
         );

@@ -53,35 +53,32 @@ class PushTable extends  React.Component{
     render() {
         const me = this;
         const columns = [
-            { dataKey: 'jsxid', title: 'jsxid', width: 80 },
-            { dataKey: 'city',
-                editKey: 'cityId',
-                title: '城市',
-                width: 200,
-                type: 'select',
-                renderChildren: () => [{ id: 'bj', name: '北京' }, { id: 'hz', name: '杭州' }].map(item => <Option key={item.id}>{item.name}</Option>),
-                config: { filterOption: false } },
-            { dataKey: 'name',
-                editKey: 'nameId',
-                title: '姓名',
-                width: 200,
-                type: 'radio',
-                renderChildren: () => [{ id: 'xiaoli', name: '小李' }, { id: 'xiaowang', name: '小王' }].map(item => <RadioItem key={item.id} text={item.name} value={item.id} />) },
             {
-                dataKey: 'email',
-                title: 'Email',
+                title: "商品名",
+                dataKey: "name"
+            },
+            {
+                title: "规格",
+                dataKey: "size"
+            },
+            {
+                title: "数量",
+                dataKey: "count"
+            },
+            {
+                title: "供应商",
+                dataKey: "vendorName"
+            },
+            {
+                title: "进货价",
+                dataKey: "pricing"
+            },
+            {
+                dataKey: 'outPricing',
+                title: '销售价',
                 width: 200,
                 type: 'text',
                 required: true,
-                rules: (cellData) => {
-                    if (cellData.length === 0) {
-                        return '不能为空';
-                    }
-                    if (!Validator.isEmail(cellData)) {
-                        return '必须是一个合法的邮件地址';
-                    }
-                    return true;
-                },
             },
             { dataKey: 'action1',
                 title: '操作1',
@@ -119,7 +116,6 @@ class PushTable extends  React.Component{
                 ],
             },
         ];
-
 
         const renderProps = {
             showPager: false,
