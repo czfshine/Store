@@ -19,7 +19,7 @@ ReactDOM.render( //todo:另外两个页面
         {/*根据url的内容路由组件*/}
       <Route path="/" exact component={App} />
       <Route path="/sale/" component={Sale} />
-      <Route path="/sole/" component={Sole} />
+      <Route path="/sold/" component={Sole} />
       <Route path="/check/" component={Check} />
     </div>
   </Router>,

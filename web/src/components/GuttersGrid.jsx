@@ -47,7 +47,7 @@ class GuttersGrid extends React.Component {
                         </Grid>
                         <Grid key="2" item>
                             <Paper className={classes.paper}>
-                                <SimpleCard to="sole" name="进货员" datas="我是一个进货员"/>
+                                <SimpleCard to="sold" name="进货员" datas="我是一个进货员"/>
                             </Paper>
                         </Grid>
                         <Grid key="2" item>

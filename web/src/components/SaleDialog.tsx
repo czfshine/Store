@@ -8,6 +8,8 @@ import { Table } from "uxcore";
 import { Icon } from "uxcore";
 import getStoreId from "../data/store"
 import { Message } from 'uxcore';
+import { Select } from 'uxcore';
+const { Option } = Select;
 const { Constants } = Table;
 
 const mockData = {
