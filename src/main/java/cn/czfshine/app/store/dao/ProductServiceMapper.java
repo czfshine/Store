@@ -23,4 +23,12 @@ public interface ProductServiceMapper {
 
     @Update("update storage set count = count-#{downCount} where product_id=#{productId};")
     void downCount(Integer productId,Integer downCount);
+
+    @Update("update storage set count = count+#{downCount} where product_id=#{productId};")
+    void upCount(Integer productId,Integer downCount);
+
+
+    @Select("select * from product where name = #{name} and size= #{size}")
+    List<HashMap<String,Object>> getProductByNameAndSize( @Param("name") String name,@Param("size") String size);
+
 }

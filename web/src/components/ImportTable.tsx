@@ -36,6 +36,16 @@ class ImportTable extends React.Component {
 
     getTableValues() {
         console.log(this.table.getData());
+        var data = this.table.getData();
+        fetch('/api/vendor/post', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        this.table.fetchData(); //清除所有数据咯
     }
 
 

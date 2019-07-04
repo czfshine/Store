@@ -7,34 +7,50 @@ class HistoryImportTable extends  React.Component{
             <MaterialTable
                 columns={[
                     {
-                        title: "供应商名字",
-                        field: "name"
+                        title: "商品名",
+                        field: "proname"
                     },
                     {
-                        title: "供应商位置",
-                        field: "location"
-                    }
+                        title: "规格",
+                        field: "size"
+                    },
+                    {
+                        title: "供应商名字",
+                        field: "vendorname"
+                    },
+                    {
+                        title: "进货量",
+                        field: "count"
+                    },
+                    {
+                        title: "进货价",
+                        field: "pricing"
+                    },
                 ]}
                 data={query =>
                     new Promise((resolve, reject) => {
-                        // let url = "/data/products?";
-                        // url += "size=" + query.pageSize;
-                        // url += "&page=" + query.page;
-                        // query.search
-                        // try {
-                        //     fetch(url)
-                        //         .then(response => response.json())
-                        //         .then(result => {
-                        //             resolve({
-                        //                 data: result._embedded.products,
-                        //                 page: result.page.number,
-                        //                 totalCount: result.page.totalElements
-                        //             });
-                        //         });
-                        // } catch {}
+                        let url = "/api/sold/list?";
+                        url += "size=" + query.pageSize;
+                        url += "&page=" + query.page;
+                        if(query.search.length != 0 ){
+                            url += "&searchStr=" + query.search;
+                        }
+
+                        try {
+                            fetch(url)
+                                .then(response => response.json())
+                                .then((result:any[]) => {
+                                    console.log(result);
+                                    resolve({
+                                        data: result.slice(query.page*query.pageSize),
+                                        page: query.page,
+                                        totalCount: result.length
+                                    });
+                                });
+                        } catch {}
                     })
                 }
-                title="供应商列表"
+                title="进货历史"
 
             />
         );

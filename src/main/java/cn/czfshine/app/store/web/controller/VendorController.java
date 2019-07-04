@@ -25,7 +25,7 @@ public class VendorController {
 
     @PostMapping("/api/vendor/post")
     public void postImport(@RequestBody HashMap<String,Object> json){
-
+        vendorService.postImport(json);
     }
 
 }
