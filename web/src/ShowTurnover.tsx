@@ -13,10 +13,15 @@ class ShowTurnover extends React.Component{
             title:"载入中..."
         };
         //todo jiekou
-        // fetch("./xxx").then(res =>{
-        //     let re=res.json();
-        //     this.setState({title:xx})
-        // })
+        fetch("/api/store/turnover").then(res =>{
+
+            let re=res.json();
+            re.then(((v)=> {
+                console.log(v);
+
+                this.setState({title: v})
+            }));
+        })
     }
 
 

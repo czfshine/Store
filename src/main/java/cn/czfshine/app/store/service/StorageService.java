@@ -1,9 +1,10 @@
 package cn.czfshine.app.store.service;
 
-import cn.czfshine.app.store.model.pojo.Storage;
-
+import java.util.HashMap;
 import java.util.List;
 
 public interface StorageService {
-    List<Storage> getAllStorage();
+    List<HashMap<String,Object>> getAllStorage(String searchStr);
+
+    Integer getCount(Integer gan);
 }

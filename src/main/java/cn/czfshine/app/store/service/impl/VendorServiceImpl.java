@@ -19,7 +19,7 @@ public class VendorServiceImpl implements VendorService {
 
 
     @Override
-    public List<Vendor> getAllVendor() {
-        return vendorServiceMapper.getAllVendor();
+    public List<Vendor> getAllVendor(String str) {
+        return vendorServiceMapper.getAllVendor(str);
     }
 }

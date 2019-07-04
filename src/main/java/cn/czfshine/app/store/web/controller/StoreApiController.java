@@ -1,6 +1,9 @@
 package cn.czfshine.app.store.web.controller;
 
+import cn.czfshine.app.store.dao.StorageServiceMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -10,11 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 public class StoreApiController {
-//    @Autowired
-//    private StoreRepository storeRepository;
-//
-//    @GetMapping("/api/store/firstid")
-//    public int getid(){
-//        return storeRepository.findAll().get(0).getId();
-//    }
+    @GetMapping("/api/store/firstid")
+    public int getid(){
+        return 1;
+    }
+
+    @Autowired
+    StorageServiceMapper storageServiceMapper;
+    @GetMapping("/api/store/turnover")
+    public double getTurnover(){
+        return storageServiceMapper.getTurnover();
+    }
 }

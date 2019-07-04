@@ -1,9 +1,10 @@
 package cn.czfshine.app.store.dao;
 
-import cn.czfshine.app.store.model.pojo.Sale;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,9 @@ public interface ProductServiceMapper {
     @Select("select * from product where gan = #{ganid} limit 1")
     HashMap<String,Object> getProductByGan(@Param("ganid") Integer ganid);
 
-    @Select("select id,pricing,product_id,store_id from sale where product_id=#{productId} " +
-            "and store_id=#{storeId}")
-    Sale getSaleInfo(@Param("productId") Integer productId, @Param("storeId") Integer storeId);
+    @Select("select gan,`name`,pricing,size from (sale left join product on sale.product_id=product.id ) where gan=#{productId}")
+    List<HashMap<String,Object>> getSaleInfo(@Param("productId") Integer productId, @Param("storeId") Integer storeId);
+
+    @Update("update storage set count = count-#{downCount} where product_id=#{productId};")
+    void downCount(Integer productId,Integer downCount);
 }

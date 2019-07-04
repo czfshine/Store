@@ -1,11 +1,27 @@
-DROP DATABASE if exists `storev2`;
-CREATE SCHEMA `storev2` DEFAULT CHARACTER SET utf8mb4 ;
-use `storev2`	;
+-- DROP DATABASE if exists `storev2`;
+-- CREATE SCHEMA `storev2` DEFAULT CHARACTER SET utf8mb4 ;
+ use `storev2`	;
+ 
+ 
+ 
+ 
+ DROP TABLE  if exists `sold`;
+ DROP TABLE  if exists `vendor`;
+ DROP TABLE  if exists `orders_items`;
+ DROP TABLE  if exists `orders`;
+ DROP TABLE   if exists `order_item`;
+ DROP TABLE   if exists `storage`;
+ 
+ DROP TABLE   if exists `sale`;
+ DROP TABLE  if exists  `store`;
+DROP TABLE   if exists `product`;
+DROP TABLE  if exists `inst_product`;
+DROP TABLE  if exists `type`;
 
 -- 类型
-DROP TABLE  if exists `type`;
+
 CREATE TABLE `type` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) DEFAULT NULL,
   `parent_type_id` int(11) DEFAULT NULL,
 
@@ -14,9 +30,9 @@ CREATE TABLE `type` (
 );
 
 -- 商品原型 可乐，薯片等
-DROP TABLE  if exists `inst_product`;
+
 CREATE TABLE `inst_product` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `productname` varchar(255) DEFAULT NULL,
   `type_id` int(11) DEFAULT NULL,
 
@@ -25,9 +41,9 @@ CREATE TABLE `inst_product` (
 ) ;
 
 -- 商品
-DROP TABLE   if exists `product`;
+
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `gan` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `size` varchar(255) DEFAULT NULL,
@@ -38,7 +54,7 @@ CREATE TABLE `product` (
 );
 
 -- 商店
-DROP TABLE  if exists  `store`;
+
 CREATE TABLE `store` (
   `id` int(11) NOT NULL,
   `local` varchar(255) DEFAULT NULL,
@@ -48,9 +64,9 @@ CREATE TABLE `store` (
 ) ;
 
 -- 销售信息
-DROP TABLE   if exists `sale`;
+
 CREATE TABLE `sale` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `pricing` decimal(19,2) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `store_id` int(11) DEFAULT NULL,
@@ -61,9 +77,9 @@ CREATE TABLE `sale` (
 ) ;
 
 -- 库存信息
-DROP TABLE   if exists `storage`;
+
 CREATE TABLE `storage` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `count` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `store_id` int(11) default 1,
@@ -73,9 +89,9 @@ CREATE TABLE `storage` (
 ) ;
 
 -- 订单项
-DROP TABLE   if exists `order_item`;
+
 CREATE TABLE `order_item` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `count` double DEFAULT NULL,
   `pricing` decimal(19,2) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -94,13 +110,13 @@ CREATE TABLE `order_item` (
 -- );
 
 -- 订单
-DROP TABLE  if exists `orders`;
+
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `del` bit(1) DEFAULT NULL,
   `ordertime` datetime DEFAULT NULL,
   
-  `store_id` int(11) default null, 
+  `store_id` int(11) default 1, 
   -- `customer_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   foreign key (`store_id` ) references `store`(`id`)
@@ -108,7 +124,7 @@ CREATE TABLE `orders` (
 
 
 -- 订单和订单项多对多的关系
-DROP TABLE  if exists `orders_items`;
+
 CREATE TABLE `orders_items` (
   `orders_id` int(11) NOT NULL,
   `items_id` int(11) NOT NULL,
@@ -118,18 +134,18 @@ foreign key (`items_id` ) references `order_item`(`id`)
 ) ;
 
 -- 供应商
-DROP TABLE  if exists `vendor`;
+
 CREATE TABLE `vendor` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `location` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
 -- 进货信息
-DROP TABLE  if exists `sold`;
+
 CREATE TABLE `sold` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `count` int(11) NOT NULL,
   `pricing` decimal(19,2) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,

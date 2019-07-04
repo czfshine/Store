@@ -38,35 +38,27 @@ class ImportTable extends React.Component {
         console.log(this.table.getData());
     }
 
-    handleTableChange(data, dataKey, pass) {
-        console.log(data.data);
-    }
 
     render() {
-        let url = "/api/a";
+        let url = "/api/vendor/list";
         // eslint-disable-next-line no-undef
+        this.list=[];
         jQuery.ajax(url, {
             async: false,
             success: (re) => {
-                console.log(re)
+                console.log(re);
                 let i = 0;
-                let a: any[] = [];
+                let a: any[] =re;
                 let res: any[] = [];
                 a.forEach((v) => {
-                    res.push({
-                        id: i,
-                        name: v,
-                    })
+                    console.log(v.name);
+                    res.push(<Option key={i}>{v.name}</Option>);
+                    i++;
                 });
-
-
+                this.list = res;
             }
         });
-        this.list = [{
-            id: "a",
-            name: "b",
-        }];
-        fetch("url").then();
+
         const me = this;
         const columns = [
 
@@ -76,7 +68,15 @@ class ImportTable extends React.Component {
                 title: '供应商',
                 width: 200,
                 type: 'select',
-                renderChildren: () => this.list.map(item => <Option key={item.id}>{item.name}</Option>),
+                renderChildren: () => {
+                    console.log("1");
+                    console.log(this.list);
+                    return  this.list
+                },
+                render:(v)=>{
+                    console.log(v);
+                    return <p>{v.label}</p>
+                },
                 config: {
                     filterOption: false,
                     // combobox:true
@@ -100,7 +100,7 @@ class ImportTable extends React.Component {
                 dataKey: 'count',
                 title: '进货量',
                 width: 200,
-                type: 'number',
+                type: 'text',
                 required: true,
             },
 
@@ -160,7 +160,7 @@ class ImportTable extends React.Component {
             },
             jsxcolumns: columns,
             processData: data => data,
-            onChange: me.handleTableChange,
+
         };
 
         return (

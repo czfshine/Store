@@ -1,12 +1,20 @@
 package cn.czfshine.app.store.service.impl;
 
+import cn.czfshine.app.store.dao.OrderItemServiceMapper;
+import cn.czfshine.app.store.dao.OrdersMapper;
 import cn.czfshine.app.store.dao.OrdersServiceMapper;
+import cn.czfshine.app.store.dao.ProductServiceMapper;
 import cn.czfshine.app.store.model.dto.OrderInfoDO;
+import cn.czfshine.app.store.model.pojo.OrderItem;
 import cn.czfshine.app.store.model.pojo.Orders;
 import cn.czfshine.app.store.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,42 +32,23 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfoDO> getAllOrder() {
         List<HashMap<String, Object>> allOrders = ordersServiceMapper.getAllOrders();
         System.out.println(allOrders.size());
-        HashMap<String, Object> stringObjectHashMap = allOrders.get(0);
-        for (String key:stringObjectHashMap.keySet()
+
+        ArrayList<OrderInfoDO> res = new ArrayList<>();
+        for (HashMap<String,Object> hm:allOrders
              ) {
-
-            System.out.println(key);
-            System.out.println(stringObjectHashMap.get(key).getClass());
-
+            OrderInfoDO orderInfoDO = new OrderInfoDO();
+            orderInfoDO.setCount((Integer.parseInt(hm.get("count").toString())) );
+            if(hm.getOrDefault("ordertime",null) == null){
+                orderInfoDO.setCreateTime(String.valueOf(new Date()));
+            }else{
+                orderInfoDO.setCreateTime(hm.get("ordertime").toString());
+            }
+            orderInfoDO.setId((Integer) hm.get("id"));
+            orderInfoDO.setTotalPrice(BigDecimal.valueOf(Double.parseDouble(hm.get("total").toString())));
+            res.add(orderInfoDO);
         }
-        System.out.println("aaa");
-//        List<Orders> all = ordersRepository.findAll();
-//
-//        LinkedList<OrderInfoDO> res = new LinkedList<>();
-//
-//        for (Orders order :
-//                all) {
-//            if(order == null || order.getDel()){
-//                continue;
-//            }
-//            int id = order.getId();
-//            Date createTime = order.getOrdertime();
-//            BigDecimal totalprice = new BigDecimal("0.0");
-//            int count =0;
-//            for (OrderItem oi:order.getItems()
-//                 ) {
-//                totalprice = totalprice.add(oi.getPricing());
-//                count ++;
-//            }
-//            OrderInfoDO orderList = new OrderInfoDO();
-//            orderList.setId(id);
-//            orderList.setCount(count);
-//            orderList.setCreateTime(createTime.toString());
-//            orderList.setTotalPrice(totalprice);
-//            res.add(orderList);
-//        }
 
-        return null;
+        return res;
     }
 
     @Override
@@ -93,6 +82,51 @@ public class OrderServiceImpl implements OrderService {
 //        }
 //
 //        ordersRepository.saveAndFlush(save);
+
+    }
+
+    @Autowired
+    private ProductServiceMapper productServiceMapper;
+    @Autowired
+    private OrderItemServiceMapper orderItemServiceMapper;
+    @Autowired
+    private OrdersMapper ordersMapper;
+
+    @Override
+    @Transient
+    //todo 判断数量
+    public void addOrder(HashMap<String, Object> json) {
+        List<HashMap<String, Object>> list = (List<HashMap<String, Object>>)
+                (((HashMap) json.get("data")).get("data"));
+
+        ArrayList<OrderItem> orderItems = new ArrayList<>();
+        for (Object b : list
+        ) {
+            HashMap<String, Object> b1 = (HashMap<String, Object>) b;
+            Object ean = b1.get("EAN");
+            HashMap<String, Object> productByGan = productServiceMapper.getProductByGan((Integer) ean);
+            Object pricing = b1.get("pricing");
+            Object count = b1.get("count");
+            productServiceMapper.downCount((Integer)productByGan.get("id"), (Integer) count);
+            OrderItem orderItem = new OrderItem();
+            orderItem.setCount(Double.parseDouble(count.toString()));
+            orderItem.setProductId((Integer) productByGan.get("id"));
+            orderItem.setPricing(BigDecimal.valueOf(Double.parseDouble(pricing.toString())) );
+            orderItemServiceMapper.insertAndGetIdInplace(orderItem);
+            orderItems.add(orderItem);
+        }
+
+        Orders orders = new Orders();
+        orders.setCustomerId(0);
+        orders.setDel(false);
+        orders.setOrdertime(new Date());
+
+        ordersServiceMapper.insert(orders);
+        for (OrderItem oi :orderItems
+             ) {
+            orderItemServiceMapper.insertOrderItems(orders.getId(),oi.getId());
+        }
+        orderItemServiceMapper.call(orders.getId());
 
     }
 }

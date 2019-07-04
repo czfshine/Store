@@ -76,9 +76,9 @@ public class ProductApiController {
      * @throws ApiResourceNotFoundException
      */
     @GetMapping("/api/sale")
-    public Sale getSaleInfo(@RequestParam("productId") Integer productId,
-                            @RequestParam("storeId") Integer storeId) throws ApiResourceNotFoundException {
-        return productService.getSaleInfo(productId,storeId);
+    public HashMap<String,Object> getSaleInfo(@RequestParam("productid") Integer productId,
+                                               @RequestParam("storeid") Integer storeId) throws ApiResourceNotFoundException {
+        return productService.getSaleInfo(productId,storeId).get(0);
     }
 
 

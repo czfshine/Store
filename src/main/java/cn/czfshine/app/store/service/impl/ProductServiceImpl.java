@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Sale getSaleInfo(Integer productId, Integer storeId) {
+    public List<HashMap<String,Object>> getSaleInfo(Integer productId, Integer storeId) {
         return productServiceMapper.getSaleInfo(productId,storeId);
     }
 }

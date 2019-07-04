@@ -79,13 +79,14 @@ class SaleDialog extends React.Component {
               "inst":{..},
               "store":{..}//todo
                */
+              console.log(result);
               if(rowdatamap[Gan]==undefined){
                 let rowData={
-                  "EAN":result.product.gan,
-                  "productname":result.product.name,
+                  "EAN":result.gan,
+                  "productname":result.name,
                   "pricing":result.pricing,
                   "count":1,
-                  "size":result.product.size,
+                  "size":result.size,
                   "total":result.pricing,
                   "__treeId__":""+this.jsxid
                 }

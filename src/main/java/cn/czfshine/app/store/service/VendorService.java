@@ -6,5 +6,5 @@ import cn.czfshine.app.store.model.pojo.Vendor;
 import java.util.List;
 
 public interface VendorService {
-    List<Vendor> getAllVendor();
+    List<Vendor> getAllVendor(String str);
 }
