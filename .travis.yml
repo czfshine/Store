@@ -8,3 +8,5 @@ script:
   - cd web
   - yarn
   - yarn build
+  - cd ..
+  - mvn package
