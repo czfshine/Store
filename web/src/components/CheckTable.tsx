@@ -153,7 +153,7 @@ class CheckTable extends React.Component{
             if(res.length==0){
 
                 Message['success']({
-                    duration:30.0,
+                    duration:10.0,
                     content: '提交成功,数据没有错误',
                     className: 'kuma-message-small',
                 });

@@ -61,7 +61,7 @@ function transData(source:any) :item[]{
 
 interface ReturnGoodsInfo {
     orderId:number,
-    productIds:number[]
+    itemsIds:number[]
 }
 function EditModal(props) {
     const [modalStyle] = React.useState(getModalStyle);
@@ -71,10 +71,10 @@ function EditModal(props) {
         let res:ReturnGoodsInfo;
         res={
             orderId:props.selectId,
-            productIds:[]
+            itemsIds:[]
         };
         rs.forEach((r)=>{
-            res.productIds.push(r.productId);
+            res.itemsIds.push(r.items_id);
         });
 
         fetch('/api/order/return', {
@@ -104,7 +104,7 @@ function EditModal(props) {
             >
                 <div style={modalStyle} className={classes.paper}>
                     <Typography variant="h6" id="modal-title">
-                        退货窗口
+                        订单详情
                     </Typography>
                     <MaterialTable
                         columns={[
@@ -138,6 +138,7 @@ function EditModal(props) {
                             selection: true
                         }}
                         onSelectionChange={(rows) => {
+                            console.log(rows);
                             rs=rows
                         }}
                         data={query =>
@@ -146,17 +147,17 @@ function EditModal(props) {
                                 try {
                                     fetch(url)
                                         .then(response => response.json())
-                                        .then(result => {
+                                        .then((result:any[]) => {
                                             resolve({
-                                                data: transData(result.data),
+                                                data: result,
                                                 page: 0,
-                                                totalCount: 1
+                                                totalCount: result.length
                                             });
                                         });
                                 } catch {}
                             })
                         }
-                        title="所有订单信息"
+                        title="商品"
                     />
 
                     <div>

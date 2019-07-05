@@ -39,11 +39,33 @@ class PushTable extends  React.Component{
             data: mockData,
             showOtherColumn: false,
         };
+        // new Promise((resolve, reject) => {
+        //     let url = "/api/storage/list?";
+        //     try {
+        //         fetch(url)
+        //             .then(response => response.json())
+        //             .then((result:any[]) => {
+        //                 this.setState({data:result})
+        //             });
+        //     } catch {}
+        // })
     }
 
 
     getTableValues() {
         console.log(this.table.getData());
+        var data = this.table.getData();
+        fetch('/api/sale/post', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }).then(()=>{
+            this.table.fetchData(); //清除所有数据咯
+        });
+
     }
 
     handleTableChange(data, dataKey, pass) {
@@ -64,10 +86,6 @@ class PushTable extends  React.Component{
             {
                 title: "数量",
                 dataKey: "count"
-            },
-            {
-                title: "供应商",
-                dataKey: "vendorName"
             },
             {
                 title: "进货价",
@@ -119,14 +137,8 @@ class PushTable extends  React.Component{
 
         const renderProps = {
             showPager: false,
-            fetchParams: {},
-            jsxdata: me.state.data,
+            fetchUrl: '/api/sold/nosale',
             className: 'kuma-uxtable-split-line',
-            actionBar: {
-                新增行: () => {
-                    me.table.addEmptyRow();
-                },
-            },
             jsxcolumns: columns,
             processData: data => data,
             onChange: me.handleTableChange,
@@ -135,7 +147,7 @@ class PushTable extends  React.Component{
         return (
             <div>
                 <Table {...renderProps} ref={(c) => { this.table = c; }} />
-                <Button onClick={me.getTableValues.bind(me)} style={{ marginTop: '12px' }}>获取 Table 的值</Button>
+                <Button onClick={me.getTableValues.bind(me)} style={{ marginTop: '12px' }}>提交</Button>
             </div>
         );
     }

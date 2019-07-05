@@ -52,7 +52,7 @@ public class OrderController {
     // modified
     // 参数的类型由String改为了Integer,因为orders表设计的时候该字段是int类型的
     @GetMapping("/api/order/getOne/{id}")
-    public Orders getOrderById(@PathVariable("id") Integer id){
+    public List<HashMap<String, Object>> getOrderById(@PathVariable("id") Integer id){
         return orderService.getOrderById(id);
     }
 
@@ -62,7 +62,7 @@ public class OrderController {
     @PostMapping("/api/order/return")
     public BasicResponse returnGoods(@RequestBody ReturnGoodsInfo returnGoodsInfo){
         log.warn(String.valueOf(returnGoodsInfo));
-        orderService.returnProducts(returnGoodsInfo.getOrderId(),returnGoodsInfo.getProductIds());
+        orderService.returnProducts(returnGoodsInfo.getOrderId(),returnGoodsInfo.getItemsIds());
         return new BasicResponse();
     }
 }

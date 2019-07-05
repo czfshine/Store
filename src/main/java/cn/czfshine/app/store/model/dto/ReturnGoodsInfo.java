@@ -8,6 +8,6 @@ import java.util.List;
 public class ReturnGoodsInfo {
 
     private Integer orderId;
-    private List<Integer> productIds;
+    private List<Integer> itemsIds;
 }
 

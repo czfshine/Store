@@ -1,10 +1,10 @@
 package cn.czfshine.app.store.dao;
 
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import cn.czfshine.app.store.model.pojo.Orders;
+import cn.czfshine.app.store.model.pojo.Product;
+import cn.czfshine.app.store.model.pojo.Sale;
+import org.apache.ibatis.annotations.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,4 +31,15 @@ public interface ProductServiceMapper {
     @Select("select * from product where name = #{name} and size= #{size}")
     List<HashMap<String,Object>> getProductByNameAndSize( @Param("name") String name,@Param("size") String size);
 
+    @Insert("  insert into product (gan, name, \n" +
+            "      size, instid)\n" +
+            "    values ( #{gan,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, \n" +
+            "      #{size,jdbcType=VARCHAR}, 1)")
+    @SelectKey(statement = "select LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = int.class)
+    void insert(Product product);
+    @Insert(" insert into sale ( pricing, product_id, \n" +
+            "      store_id)\n" +
+            "    values ( #{pricing,jdbcType=DECIMAL}, #{productId,jdbcType=INTEGER}, \n" +
+            "      #{storeId,jdbcType=INTEGER})")
+    void insertSale(Sale sale);
 }

@@ -7,7 +7,7 @@ public class Sale {
 
     private BigDecimal pricing;
 
-    private Integer proid;
+    private Integer productId;
 
     private Integer storeId;
 
@@ -28,11 +28,11 @@ public class Sale {
     }
 
     public Integer getProid() {
-        return proid;
+        return productId;
     }
 
     public void setProid(Integer proid) {
-        this.proid = proid;
+        this.productId = proid;
     }
 
     public Integer getStoreId() {

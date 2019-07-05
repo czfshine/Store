@@ -12,4 +12,5 @@ public interface ProductService {
     HashMap<String,Object> getProductByGan(Integer gan);
 
     List<HashMap<String,Object>> getSaleInfo(Integer productId, Integer storeId);
+    List<HashMap<String,Object>> getNotSale();
 }

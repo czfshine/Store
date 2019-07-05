@@ -27,4 +27,7 @@ public interface SoldServiceMapper {
             "or cast(count as char) like '%${str}%' " +
             "or cast(pricing as char) like '%${str}%'  ")
     List<HashMap<String,Object>> list(@Param("str") String str);
+
+    @Select("SELECT product_id,gan,name,size,count,pricing FROM nosale left join sold on nosale.id =sold.product_id;")
+    List<HashMap<String,Object>> getNoSaleProduct();
 }

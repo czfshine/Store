@@ -1,6 +1,7 @@
 package cn.czfshine.app.store.dao;
 
 import cn.czfshine.app.store.model.pojo.Storage;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -24,4 +25,10 @@ public interface StorageServiceMapper {
 
     @Select("select turnover from store where id = 1 limit 1;")
     Double getTurnover();
+
+    @Insert("insert into storage (store_id, count, product_id\n" +
+            "      )\n" +
+            "    values (#{storeId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}\n" +
+            "      )")
+    void insert(Storage storage);
 }

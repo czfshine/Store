@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface OrderService {
     List<OrderInfoDO> getAllOrder();
-    Orders getOrderById(Integer id);
-    void returnProducts(Integer orderId, List<Integer> productIds);
+    List<HashMap<String, Object>> getOrderById(Integer id);
+    void returnProducts(Integer orderId, List<Integer> itemsIds);
     void addOrder(HashMap<String,Object> json);
 }

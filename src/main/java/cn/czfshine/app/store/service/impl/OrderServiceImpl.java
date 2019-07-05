@@ -52,36 +52,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Orders getOrderById(Integer id) {
+    public List<HashMap<String, Object>> getOrderById(Integer id) {
         return ordersServiceMapper.getOrderById(id);
     }
 
     @Override
-    public void returnProducts(Integer orderId, List<Integer> productIds) {
-//        //del order
-//        Orders one = ordersRepository.getOne(orderId);
-//        one.setDel(true);
-//        ordersRepository.save(one);
-//        ordersRepository.saveAndFlush(one);
-//        ArrayList<OrderItem> newList = new ArrayList<>();
-//
-//        Orders orders = new Orders();
-//        orders.setCustomer(one.getCustomer());
-//        orders.setOrdertime(new Date());
-//        orders.setItems(newList);
-//        Orders save = ordersRepository.saveAndFlush(orders);
-//
-//        List<OrderItem> items = save.getItems();
-//        for (OrderItem oi:one.getItems()
-//             ) {
-//            if (!productIds.contains(oi.getId())) {
-//
-//                OrderItem one1 = orderItemRepository.getOne(oi.getId());
-//                items.add(one1);
-//            }
-//        }
-//
-//        ordersRepository.saveAndFlush(save);
+    public void returnProducts(Integer orderId, List<Integer> itemsIds) {
+
+        for(Integer i:itemsIds){
+            ordersServiceMapper.delItems(orderId,i);
+        }
 
     }
 

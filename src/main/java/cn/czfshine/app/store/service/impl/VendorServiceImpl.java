@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class VendorServiceImpl implements VendorService {
@@ -36,6 +33,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Autowired
     private StorageServiceMapper storageServiceMapper;
+    private static Random random=new Random();
     @Override
     @Transient
     public void postImport(HashMap<String, Object> json) {
@@ -63,7 +61,22 @@ public class VendorServiceImpl implements VendorService {
 
 
             if(productByNameAndSize.size() == 0){
-                //todo
+                //商品不存在
+                Product product = new Product();
+                int i = random.nextInt();
+                if(i<0) i = - i;
+                product.setGan(i);
+                product.setInstid(1);
+                product.setName(proname.toString());
+                product.setSize(proszie.toString());
+                productServiceMapper.insert(product);
+                prid=product.getId();
+
+                Storage storage = new Storage();
+                storage.setCount(Integer.parseInt(count.toString()));
+                storage.setStoreId(1);
+                storage.setProductId(prid);
+                storageServiceMapper.insert(storage);
             }else{
                 HashMap<String, Object> stringObjectHashMap = productByNameAndSize.get(0);
                 prid = (Integer) stringObjectHashMap.get("id");

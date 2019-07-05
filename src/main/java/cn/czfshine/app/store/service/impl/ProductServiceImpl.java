@@ -1,6 +1,8 @@
 package cn.czfshine.app.store.service.impl;
 
+import cn.czfshine.app.store.dao.OrdersServiceMapper;
 import cn.czfshine.app.store.dao.ProductServiceMapper;
+import cn.czfshine.app.store.dao.SoldServiceMapper;
 import cn.czfshine.app.store.model.pojo.Sale;
 import cn.czfshine.app.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductServiceMapper productServiceMapper;
+    @Autowired
+    private SoldServiceMapper soldServiceMapper;
     @Override
     public List<Integer> getAllGan() {
         return productServiceMapper.getAllGan();
@@ -26,5 +30,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<HashMap<String,Object>> getSaleInfo(Integer productId, Integer storeId) {
         return productServiceMapper.getSaleInfo(productId,storeId);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getNotSale() {
+        return soldServiceMapper.getNoSaleProduct();
     }
 }
