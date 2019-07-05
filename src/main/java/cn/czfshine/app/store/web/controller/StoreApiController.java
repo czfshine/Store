@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class StoreApiController {
     @GetMapping("/api/store/firstid")
-    public int getid(){
+    public int getid() {
         return 1;
     }
 
     @Autowired
     StorageServiceMapper storageServiceMapper;
+
     @GetMapping("/api/store/turnover")
-    public double getTurnover(){
+    public double getTurnover() {
         return storageServiceMapper.getTurnover();
     }
 }

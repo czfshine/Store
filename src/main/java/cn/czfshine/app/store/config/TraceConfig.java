@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 配置RemoteHttpTrace.
  * 主要功能是追踪整个系统的http请求记录
+ *
  * @see RemoteHttpTraceRepository
  */
 @Configuration

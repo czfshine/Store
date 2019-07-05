@@ -15,11 +15,12 @@ public class StorageServiceImpl implements StorageService {
     private StorageServiceMapper storageServiceMapper;
 
     @Override
-    public List<HashMap<String,Object>> getAllStorage(String searchStr) {
+    public List<HashMap<String, Object>> getAllStorage(String searchStr) {
         return storageServiceMapper.getAllStorage(searchStr);
     }
+
     @Override
-    public Integer getCount(Integer gan){
+    public Integer getCount(Integer gan) {
         return storageServiceMapper.getCount(gan);
     }
 }

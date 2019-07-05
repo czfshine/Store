@@ -1,14 +1,17 @@
 package cn.czfshine.app.store.dao;
 
 import cn.czfshine.app.store.model.pojo.Sold;
-import cn.czfshine.app.store.model.pojo.Vendor;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Repository
+@Mapper
 public interface SoldServiceMapper {
 
     @Insert("insert into sold ( count, pricing, \n" +
@@ -26,8 +29,8 @@ public interface SoldServiceMapper {
             "or vendor.name like '%${str}%' " +
             "or cast(count as char) like '%${str}%' " +
             "or cast(pricing as char) like '%${str}%'  ")
-    List<HashMap<String,Object>> list(@Param("str") String str);
+    List<HashMap<String, Object>> list(@Param("str") String str);
 
     @Select("SELECT product_id,gan,name,size,count,pricing FROM nosale left join sold on nosale.id =sold.product_id;")
-    List<HashMap<String,Object>> getNoSaleProduct();
+    List<HashMap<String, Object>> getNoSaleProduct();
 }

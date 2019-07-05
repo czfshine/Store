@@ -4,15 +4,19 @@ import cn.czfshine.app.store.dao.ProductServiceMapper;
 import cn.czfshine.app.store.dao.SoldServiceMapper;
 import cn.czfshine.app.store.dao.StorageServiceMapper;
 import cn.czfshine.app.store.dao.VendorServiceMapper;
-import cn.czfshine.app.store.model.pojo.*;
-import cn.czfshine.app.store.service.StorageService;
+import cn.czfshine.app.store.model.pojo.Product;
+import cn.czfshine.app.store.model.pojo.Sold;
+import cn.czfshine.app.store.model.pojo.Storage;
+import cn.czfshine.app.store.model.pojo.Vendor;
 import cn.czfshine.app.store.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 @Service
 public class VendorServiceImpl implements VendorService {
@@ -33,7 +37,8 @@ public class VendorServiceImpl implements VendorService {
 
     @Autowired
     private StorageServiceMapper storageServiceMapper;
-    private static Random random=new Random();
+    private static Random random = new Random();
+
     @Override
     @Transient
     public void postImport(HashMap<String, Object> json) {
@@ -57,27 +62,27 @@ public class VendorServiceImpl implements VendorService {
             sold.setPricing(BigDecimal.valueOf(Double.parseDouble(pricing.toString())));
             List<HashMap<String, Object>> productByNameAndSize = productServiceMapper.getProductByNameAndSize(proname.toString(), proszie.toString());
 
-            Integer prid=0;
+            Integer prid = 0;
 
 
-            if(productByNameAndSize.size() == 0){
+            if (productByNameAndSize.size() == 0) {
                 //商品不存在
                 Product product = new Product();
                 int i = random.nextInt();
-                if(i<0) i = - i;
+                if (i < 0) i = -i;
                 product.setGan(i);
                 product.setInstid(1);
                 product.setName(proname.toString());
                 product.setSize(proszie.toString());
                 productServiceMapper.insert(product);
-                prid=product.getId();
+                prid = product.getId();
 
                 Storage storage = new Storage();
                 storage.setCount(Integer.parseInt(count.toString()));
                 storage.setStoreId(1);
                 storage.setProductId(prid);
                 storageServiceMapper.insert(storage);
-            }else{
+            } else {
                 HashMap<String, Object> stringObjectHashMap = productByNameAndSize.get(0);
                 prid = (Integer) stringObjectHashMap.get("id");
             }
@@ -89,7 +94,7 @@ public class VendorServiceImpl implements VendorService {
             Integer id = vendorByName.get(0).getId();
             sold.setVendorId(id);
             soldServiceMapper.insert(sold);
-            productServiceMapper.upCount(prid,Integer.parseInt(count.toString()));
+            productServiceMapper.upCount(prid, Integer.parseInt(count.toString()));
 
 
         }

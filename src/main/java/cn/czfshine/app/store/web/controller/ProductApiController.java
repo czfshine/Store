@@ -2,7 +2,6 @@ package cn.czfshine.app.store.web.controller;
 
 import cn.czfshine.app.store.exception.ApiResourceNotFoundException;
 import cn.czfshine.app.store.model.dto.AllGan;
-import cn.czfshine.app.store.model.pojo.Sale;
 import cn.czfshine.app.store.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,10 @@ public class ProductApiController {
 
     @Autowired
     private ProductService productService;
-    /** 获取当前数据库中的所有商品唯一识别码
+
+    /**
+     * 获取当前数据库中的所有商品唯一识别码
+     *
      * @return
      */
     @GetMapping("/api/getallgan")
@@ -38,12 +40,13 @@ public class ProductApiController {
 
     /**
      * 根据商品的唯一识别码获取商品信息
+     *
      * @param gan
      * @return 对应的商品信息
      * @throws ApiResourceNotFoundException
      */
     @GetMapping("/api/Product/gan/{gan}")
-    public HashMap<String,Object> getByGan(@PathVariable int gan) throws ApiResourceNotFoundException {
+    public HashMap<String, Object> getByGan(@PathVariable int gan) throws ApiResourceNotFoundException {
         return productService.getProductByGan(gan);
     }
 
@@ -70,15 +73,16 @@ public class ProductApiController {
 
     /**
      * 根据productId和storeId查得相应的销售信息
+     *
      * @param productId
      * @param storeId
      * @return
      * @throws ApiResourceNotFoundException
      */
     @GetMapping("/api/sale")
-    public HashMap<String,Object> getSaleInfo(@RequestParam("productid") Integer productId,
+    public HashMap<String, Object> getSaleInfo(@RequestParam("productid") Integer productId,
                                                @RequestParam("storeid") Integer storeId) throws ApiResourceNotFoundException {
-        return productService.getSaleInfo(productId,storeId).get(0);
+        return productService.getSaleInfo(productId, storeId).get(0);
     }
 
 

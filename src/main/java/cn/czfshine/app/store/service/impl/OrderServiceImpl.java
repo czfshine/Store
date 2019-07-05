@@ -1,7 +1,6 @@
 package cn.czfshine.app.store.service.impl;
 
 import cn.czfshine.app.store.dao.OrderItemServiceMapper;
-import cn.czfshine.app.store.dao.OrdersMapper;
 import cn.czfshine.app.store.dao.OrdersServiceMapper;
 import cn.czfshine.app.store.dao.ProductServiceMapper;
 import cn.czfshine.app.store.model.dto.OrderInfoDO;
@@ -34,13 +33,13 @@ public class OrderServiceImpl implements OrderService {
         System.out.println(allOrders.size());
 
         ArrayList<OrderInfoDO> res = new ArrayList<>();
-        for (HashMap<String,Object> hm:allOrders
-             ) {
+        for (HashMap<String, Object> hm : allOrders
+        ) {
             OrderInfoDO orderInfoDO = new OrderInfoDO();
-            orderInfoDO.setCount((Integer.parseInt(hm.get("count").toString())) );
-            if(hm.getOrDefault("ordertime",null) == null){
+            orderInfoDO.setCount((Integer.parseInt(hm.get("count").toString())));
+            if (hm.getOrDefault("ordertime", null) == null) {
                 orderInfoDO.setCreateTime(String.valueOf(new Date()));
-            }else{
+            } else {
                 orderInfoDO.setCreateTime(hm.get("ordertime").toString());
             }
             orderInfoDO.setId((Integer) hm.get("id"));
@@ -59,8 +58,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void returnProducts(Integer orderId, List<Integer> itemsIds) {
 
-        for(Integer i:itemsIds){
-            ordersServiceMapper.delItems(orderId,i);
+        for (Integer i : itemsIds) {
+            ordersServiceMapper.delItems(orderId, i);
         }
 
     }
@@ -69,8 +68,6 @@ public class OrderServiceImpl implements OrderService {
     private ProductServiceMapper productServiceMapper;
     @Autowired
     private OrderItemServiceMapper orderItemServiceMapper;
-    @Autowired
-    private OrdersMapper ordersMapper;
 
     @Override
     @Transient
@@ -87,11 +84,11 @@ public class OrderServiceImpl implements OrderService {
             HashMap<String, Object> productByGan = productServiceMapper.getProductByGan((Integer) ean);
             Object pricing = b1.get("pricing");
             Object count = b1.get("count");
-            productServiceMapper.downCount((Integer)productByGan.get("id"), (Integer) count);
+            productServiceMapper.downCount((Integer) productByGan.get("id"), (Integer) count);
             OrderItem orderItem = new OrderItem();
             orderItem.setCount(Double.parseDouble(count.toString()));
             orderItem.setProductId((Integer) productByGan.get("id"));
-            orderItem.setPricing(BigDecimal.valueOf(Double.parseDouble(pricing.toString())) );
+            orderItem.setPricing(BigDecimal.valueOf(Double.parseDouble(pricing.toString())));
             orderItemServiceMapper.insertAndGetIdInplace(orderItem);
             orderItems.add(orderItem);
         }
@@ -102,9 +99,9 @@ public class OrderServiceImpl implements OrderService {
         orders.setOrdertime(new Date());
 
         ordersServiceMapper.insert(orders);
-        for (OrderItem oi :orderItems
-             ) {
-            orderItemServiceMapper.insertOrderItems(orders.getId(),oi.getId());
+        for (OrderItem oi : orderItems
+        ) {
+            orderItemServiceMapper.insertOrderItems(orders.getId(), oi.getId());
         }
         orderItemServiceMapper.call(orders.getId());
 

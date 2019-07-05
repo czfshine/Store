@@ -16,15 +16,15 @@ public class VendorController {
 
     // 获取供应商列表
     @GetMapping("/api/vendor/list")
-    public List<Vendor> getAllVendor(@RequestParam(value = "searchStr",required = false) String searchStr ){
-        if (searchStr==null){
-            searchStr="";
+    public List<Vendor> getAllVendor(@RequestParam(value = "searchStr", required = false) String searchStr) {
+        if (searchStr == null) {
+            searchStr = "";
         }
         return vendorService.getAllVendor(searchStr);
     }
 
     @PostMapping("/api/vendor/post")
-    public void postImport(@RequestBody HashMap<String,Object> json){
+    public void postImport(@RequestBody HashMap<String, Object> json) {
         vendorService.postImport(json);
     }
 

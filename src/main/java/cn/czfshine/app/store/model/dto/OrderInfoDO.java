@@ -3,7 +3,6 @@ package cn.czfshine.app.store.model.dto;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 订单基本信息

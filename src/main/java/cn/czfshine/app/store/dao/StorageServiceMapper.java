@@ -5,10 +5,12 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Repository
 @Mapper
 public interface StorageServiceMapper {
 
@@ -19,7 +21,8 @@ public interface StorageServiceMapper {
             "or size like '%${str}%' " +
             "or cast(gan as char) like '%${str}%' " +
             "or cast(count as char) like '%${str}%' ")
-    List<HashMap<String,Object>> getAllStorage(@Param("str") String str);
+    List<HashMap<String, Object>> getAllStorage(@Param("str") String str);
+
     @Select("select count from storage left join product on storage.product_id=product.id where gan = #{gan}")
     Integer getCount(Integer gan);
 

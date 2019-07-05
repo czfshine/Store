@@ -3,7 +3,9 @@ package cn.czfshine.app.store.web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**主页控制器
+/**
+ * 主页控制器
+ *
  * @author:czfshine
  * @date:2019/3/22 16:21
  */

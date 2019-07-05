@@ -9,7 +9,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-/**拦截器
+/**
+ * 拦截器
+ *
  * @author:czfshine
  * @date:2019/3/22 16:53
  */
@@ -37,5 +39,5 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/favicon.ico");
         registry.addResourceHandler("/manifest.json")
                 .addResourceLocations("classpath:/manifest.json");
-        }
+    }
 }

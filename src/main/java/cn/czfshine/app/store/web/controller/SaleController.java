@@ -12,8 +12,9 @@ import java.util.HashMap;
 public class SaleController {
     @Autowired
     private SoldService soldService;
+
     @PostMapping("/api/sale/post")
-    public void postImport(@RequestBody HashMap<String,Object> json){
+    public void postImport(@RequestBody HashMap<String, Object> json) {
         soldService.post(json);
     }
 }

@@ -1,8 +1,6 @@
 package cn.czfshine.app.store.model.constant;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 状态码
@@ -33,10 +31,10 @@ public enum StatusCode {
 //    }
 
     //大写
-    SUCCESS(0000,"请求成功"),
-    PARAM_ERROR(4001,"参数错误"),
-    LOGIC_ERROR(5000,"逻辑错误"),
-    ORDERITEM_EMPTY_ERROR(5001,"订单项为空错误");
+    SUCCESS(0000, "请求成功"),
+    PARAM_ERROR(4001, "参数错误"),
+    LOGIC_ERROR(5000, "逻辑错误"),
+    ORDERITEM_EMPTY_ERROR(5001, "订单项为空错误");
     private int code;
     private String msg;
 
